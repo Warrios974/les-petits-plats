@@ -1,0 +1,47 @@
+.customCard{
+    padding: 1em;
+    > .container{
+        background-color: map-get($map: $colors, $key: color-gray);
+        border-radius: 0.3em;
+        padding: 0;
+        overflow: hidden;
+    }
+    &__image{
+        background-color: map-get($map: $colors, $key: color-image);
+        height: 10em;
+        overflow: hidden;
+        > img{
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+    }
+    &__description{
+        height: 12em;
+        padding: 1em;
+        overflow: hidden;
+        > div > h3{
+            font-size: map-get($map: $font_size, $key: paragraphes);
+        }
+        > div > span,p{
+            font-size: map-get($map: $font_size, $key: legends);
+            line-height: 1.2em;
+        }
+        > div:first-child span{
+            text-align: right;
+            font-weight: bold;
+            font-size: map-get($map: $font_size, $key: paragraphes);
+        }
+        > div:last-child{
+            padding-top: 1em;
+        }
+        > div:last-child p:last-child{
+            //Réalise un ellipsis sur 6 lignes
+            height: fit-content;
+            display: -webkit-box;
+            -webkit-line-clamp: 6;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    }
+}

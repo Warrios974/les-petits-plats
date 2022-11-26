@@ -1,0 +1,47 @@
+@mixin flex($type,$wrap) {
+    display: flex;
+    flex-direction: $type;
+    flex-wrap: $wrap;
+    align-items: center;
+}
+
+@mixin margin_BotTop($value) {
+    margin: $value 0;
+}
+
+@mixin gradient_button {
+    background: map-get($map: $colors, $key: color-secondary);
+    background: linear-gradient(180deg, map-get($map: $colors, $key: color-secondary) 1%, map-get($map: $colors, $key: color-primary) 93%);
+}
+
+@mixin button {
+    position: relative;
+    padding: map-get($map: $padding, $key: button);
+    border: none;
+    border-radius: map-get($map: $border_radius, $key: button);
+}
+
+@mixin choise {
+    border: none;
+    border-radius: map-get($map: $border_radius, $key: choises);
+}
+
+@mixin animation_choise_label($time, $direction) {
+    transition: all $time;
+    transform-origin: $direction;
+}
+
+@mixin animation_hearst($time) {
+    opacity: 1;
+    transition: all $time;
+}
+
+@mixin afterCheckbox {
+    position: absolute;
+    font-family: FontAwesome;
+    content: '\f00c'; 
+    font-weight: 900;
+    display: block;
+    color: map-get($map: $colors, $key: color-tertiary);
+    font-size: map-get($font_size, paragraphes);
+}

@@ -1,0 +1,39 @@
+/*
+    Utils
+*/
+@import "./utils/variables.scss";
+@import "./utils/mixins.scss";
+@import "./utils/functions.scss";
+@import "./utils/animation.scss";
+
+/*
+    Base
+*/
+@import "./base/reset.scss";
+@import "./base/typography.scss";
+
+/*
+    Components
+*/
+@import "./components/loader.scss";
+@import "./components/selects.scss";
+@import "./components/buttons.scss";
+@import "./components/card.scss";
+
+/*
+    Layout
+*/
+@import "./layout/header.scss";
+@import "./layout/footer.scss";
+@import "./layout/forms.scss";
+@import "./layout/navigation.scss";
+
+/*
+    Pages
+*/
+@import "./pages/home.scss";
+
+/*
+    Vendors
+*/
+@import "./vendors/bootstrap.scss";

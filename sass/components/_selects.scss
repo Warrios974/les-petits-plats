@@ -1,0 +1,65 @@
+.select{
+    position: relative;
+    display: inline-block;
+    width: 12em;
+    border-radius: 5px;
+    margin-right: 1em;
+    &__input{
+        position: relative;
+        width: 100%;
+        > img{
+            z-index: 2;
+            cursor: pointer;
+            position: absolute;
+            height: 100%;
+            right: 0;
+            width: 2.7em;
+        }
+        > label{
+            position: absolute;
+            font-weight: 600;
+            color: map-get($map: $colors, $key: color-white);
+            left: 1em;
+            top: 25%;
+        }
+        > input{
+            margin-left: 1em;
+            width: 100%;
+            &::placeholder{
+                color: map-get($map: $colors, $key: color-white);
+            }
+        }
+    }
+    &__choises{
+        position: absolute;
+        top: 3em;
+        right: 8px;
+        display: none;
+        border-radius: 5px;
+        width: 100.6%;
+        background-color: map-get($map: $colors, $key: color-secondary);
+        cursor: pointer;
+        > li{
+            color: map-get($map: $colors, $key: color-white);
+            list-style-type: none;
+        }
+    }
+    &--blue{
+        background-color: map-get($map: $colors, $key: color-secondary);
+        > div:first-child input{
+            background-color: map-get($map: $colors, $key: color-secondary);
+        }
+    }
+    &--cyan{
+        background-color: map-get($map: $colors, $key: color-tertiary);
+        > div:first-child input{
+            background-color: map-get($map: $colors, $key: color-tertiary);
+        }
+    }
+    &--orange{
+        background-color: map-get($map: $colors, $key: color-primary);
+        > div:first-child input{
+            background-color: map-get($map: $colors, $key: color-primary);
+        }
+    }
+}

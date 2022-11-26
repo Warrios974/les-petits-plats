@@ -1,0 +1,61 @@
+@keyframes checkbox {
+    from{
+        transform: translateX(2rem) rotate(0);
+        width: 0;
+    }
+    to{
+        transform: translateX(0) rotate(360deg);
+        width: 4rem;
+    }
+}
+
+@keyframes checkboxReturn {
+    from{
+        transform: translateX(0);
+        width: 4rem;
+    }
+    to{
+        transform: translateX(4rem);
+        width: 0;
+        display: none;
+    }
+}
+
+@keyframes labelanime {
+    from{
+        width: 100%;
+    }
+    to{
+        width: 80%;
+    }
+}
+
+@keyframes logo {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1.5);
+    }
+}
+
+@keyframes extinction {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        z-index: -999;
+    }
+}
+
+@keyframes choise {
+    0% {
+        opacity: 0;
+        transform: translateY(5vh);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0vh);
+    }
+}

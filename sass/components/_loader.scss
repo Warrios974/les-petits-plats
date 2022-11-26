@@ -1,0 +1,21 @@
+.loader{
+    @include flex(row,nowrap);
+    position: fixed;
+    justify-content: center;
+    font-family: $font_familly_title;
+    font-size: map-get($font_size, headers);
+    width: 100%;
+    height: 100%;
+    background-color: map-get($map: $colors, $key: color-white);
+    z-index: 9999;
+    animation: extinction 400ms 3s forwards;
+    &__letter{
+        margin: 0.5rem;
+        animation-direction: alternate-reverse;
+        @for $i from 1 through $nombre_letter {
+            &--#{$i} {
+                animation: logo $time_animation calc($i / 8)+s both infinite linear alternate;
+             }
+        }
+    }
+}

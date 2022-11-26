@@ -1,0 +1,14 @@
+{
+  "name": "projet",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sass": "sass --watch ./sass/main.scss:./assets/stylesheets/style.css --style compressed",
+    "prefix": "postcss ./assets/stylesheets/style.css --use autoprefixer -d ./assets/stylesheets/prefixed/"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

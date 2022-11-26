@@ -1,0 +1,33 @@
+.footer{
+    text-align: left;
+    color: map-get($map: $colors, $key: color-white);
+    background-color: map-get($map: $colors, $key: color-gray);
+    padding: map-get($map: $padding, $key: body);
+    &__logo{
+        font-family: $font_familly_title;
+        font-size: map-get($font_size, paragraphes);
+    }
+    &__list{
+        padding: 0;
+        > li{
+            padding: map-get($map: $padding, $key: footer-list-li);
+            > a{
+                position: relative;
+                color: map-get($map: $colors, $key: color-white);
+                z-index: 1;
+                transition: color 250ms;
+                > i{
+                    width: 1rem;
+                    height: 1rem;
+                    margin-right: 0.5rem;
+                }
+                &:hover{
+                    color: map-get($map: $colors, $key: color-tertiary);
+                }
+            }
+        }
+    }
+    @media screen and (min-width:768px) {
+        padding: map-get($map: $padding, $key: body-responsive);
+    }
+}

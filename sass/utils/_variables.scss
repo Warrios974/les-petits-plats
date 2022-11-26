@@ -1,0 +1,40 @@
+$nombre_choise: 3;
+$nombre_letter : 8;
+$time_animation : 600ms;
+
+$border_radius:(
+    choises : 1rem,
+    button : 2rem,
+);
+
+$font_familly_title: 'Shrikhand' , cursive; 
+$font_familly_paragraphe: 'Roboto', sans-serif; 
+
+$colors :(
+    color-primary: #ED6454,
+    color-secondary: #3282F7,
+    color-tertiary: #68D9A4,
+    color-white: #fff,
+    color-gray: #E7E7E7,
+    color-image: #C7BEBE,
+);
+
+
+$font_size :(
+    logo: 2em,
+    icons: 1.5em,
+    headers: 1.4em,
+    paragraphes: 1.1em,
+    legends: 0.7em,
+);
+
+$padding:(
+    body: 2rem 1.2rem,
+    body-responsive: 2rem 20%,
+    header-logo: 1.5rem .2rem .6rem .2rem,
+    footer-list-li: .2rem,
+    button: 1.2rem,
+    step-contain: 1.5rem,
+    checkbox-label: .7rem,
+    checkbox-checked: .16rem,
+);

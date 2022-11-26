@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!--CSS-->
+        <link rel="stylesheet" href="./assets/stylesheets/prefixed/style.css">
+        <!--Boostrap Icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+        <title>Document</title>
+    </head>
+    <body>
+        <header class="text-center p-5">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <img src="./assets/medias/logos/logo.svg" alt="Les petits plats" class="logo">
+                </div>
+            </div>
+        </header>
+        <main>
+            <section>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-12 mt-3">
+                            <form id="formFilter" class="form" action="index.html" method="post">
+                                <div class="mb-3">
+                                    <label for="seacrh"><img src="./assets/medias/icons/search.svg" alt="Seacrh"></label>
+                                    <input class="" type="text" name="seacrh" id="seacrh" placeholder="Rechercher une recette">
+                                </div>
+                                <fieldset>
+                                    <div id="filterIngredients" class="col-2 select select--blue">
+                                        <div class="row select__input">
+                                            <label for="seacrhIngredient">Ingrédients</label>
+                                            <img src="./assets/medias/icons/chevron-down.svg" alt="">
+                                            <input class="" type="text" name="seacrhIngredient" id="seacrhIngredient">
+                                        </div>
+                                        <ul class="pb-2 justify-content-center select__choises">
+                                            
+                                        </ul>
+                                    </div>
+                                    <div id="filterAppliance" class="col-2 select select--cyan">
+                                        <div class="row select__input">
+                                            <label for="seacrhAppliance">Appareils</label>
+                                            <img src="./assets/medias/icons/chevron-down.svg" alt="">
+                                            <input class="" type="text" name="seacrhAppliance" id="seacrhAppliance">
+                                        </div>
+                                        <ul class="pb-2 justify-content-center select__choises">
+                                            
+                                        </ul>
+                                    </div>
+                                    <div id="filterUstensils" class="col-2 select select--orange">
+                                        <div class="row select__input">
+                                            <label for="seacrhUstensils">Ustensiles</label>
+                                            <img src="./assets/medias/icons/chevron-down.svg" alt="">
+                                            <input class="" type="text" name="seacrhUstensils" id="seacrhUstensils">
+                                        </div>
+                                        <ul class="pb-2 justify-content-center select__choises">
+                                            
+                                        </ul>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div> 
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div id="receiptsGalery" class="row col-12">
+                            
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <script type="module" src="./scripts/data/recipes.js"></script>
+        <script type="module" src="./scripts/components/cardReceipt.js"></script>
+        <script type="module" src="./scripts/page/index.js"></script>
+        <script type="module" src="./scripts/utils/formFilters.js"></script>
+    </body>
+</html>
