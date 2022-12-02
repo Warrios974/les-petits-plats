@@ -37,7 +37,6 @@
         display: none;
         border-radius: 5px;
         width: 100.6%;
-        background-color: map-get($map: $colors, $key: color-secondary);
         cursor: pointer;
         > li{
             color: map-get($map: $colors, $key: color-white);
@@ -45,19 +44,25 @@
         }
     }
     &--blue{
-        background-color: map-get($map: $colors, $key: color-secondary);
+        > .select__choises{
+            background-color: map-get($map: $colors, $key: color-secondary);
+        }
         > div:first-child input{
             background-color: map-get($map: $colors, $key: color-secondary);
         }
     }
     &--cyan{
-        background-color: map-get($map: $colors, $key: color-tertiary);
+        > .select__choises{
+            background-color: map-get($map: $colors, $key: color-tertiary);
+        }
         > div:first-child input{
             background-color: map-get($map: $colors, $key: color-tertiary);
         }
     }
     &--orange{
-        background-color: map-get($map: $colors, $key: color-primary);
+        > .select__choises{
+            background-color: map-get($map: $colors, $key: color-primary);
+        }
         > div:first-child input{
             background-color: map-get($map: $colors, $key: color-primary);
         }
