@@ -1,60 +1,117 @@
 //Import de la "Factory Photographer" (fonction)
-import { filterIngredients } from "../page/index.js";
+import { filter } from "../models/filter.js";
+import { filterIngredients, filterAppliances, filterUstensils,filtersDOM } from "../page/index.js";
 
-const filterFormDOM = document.querySelector("#formFilter fieldset");
-const ingredientsSelectDOM = filterFormDOM.querySelector("#formFilter #filterIngredients");
-const applianceSelectDOM = filterFormDOM.querySelector("#formFilter #filterAppliance");
-const ustensilsSelectDOM = filterFormDOM.querySelector("#formFilter #filterUstensils");
 let open = false;
 
 //Element ingredients select
-const ingredientsLabel = ingredientsSelectDOM.querySelector("label");
-const ingredientsIcon = ingredientsSelectDOM.querySelector("img");
-const ingredientsInput = ingredientsSelectDOM.querySelector("input");
-const ingredientsList = ingredientsSelectDOM.querySelector(".select__choises");
+/*const ingredientsLabel = filtersDOM["Ingredients"].querySelector("label");
+const ingredientsIcon = filtersDOM["Ingredients"].querySelector("img");
+const ingredientsInput = filtersDOM["Ingredients"].querySelector("input");
+const ingredientsList = filtersDOM["Ingredients"].querySelector(".select__choises");*/
 
-export function initFilter(){
+export function initFilterDOM(filter,filterDOM){
+    
+    const List = filterDOM.querySelector(".select__choises");
 
-    for (let index = 0; index < 30; index++) {
+    let limite;
+
+    filter.length > 30 ? limite = 30 : limite = filter.length;
+
+    for (let index = 0; index < limite; index++) {
         const li = document.createElement( "li" );
+        const thisFilter = filter;
         li.setAttribute("class", "col-4 p-2");
-        li.textContent = filterIngredients[index];
-        ingredientsList.appendChild(li);
+        li.textContent = thisFilter[index];
+        List.appendChild(li);
     }
 }
 
-function displayList() {
-    if (!open) {
+function displayLists(filterDOM) {
+    
+    //Element ingredients select
+    const label = filterDOM.querySelector(".select__input label");
+    const icon = filterDOM.querySelector(".select__input img");
+    const input = filterDOM.querySelector(".select__input input");
+    const list = filterDOM.querySelector(".select__choises");
 
-        initFilter();
-        ingredientsSelectDOM.classList.add("col-6");
-        ingredientsSelectDOM.classList.remove("col-2");
-        ingredientsLabel.style.display = "none";
-        ingredientsIcon.setAttribute("src", "./assets/medias/icons/chevron-up.svg");
-        ingredientsInput.setAttribute("placeholder", "Rechercher une recette");
-        ingredientsList.style.display = "flex";
-        ingredientsList.classList.add("row");
-
+    if (filterDOM.getAttribute("select") == "close" && open == false) {
+        filterDOM.classList.add("col-6");
+        filterDOM.classList.remove("col-2");
+        label.style.display = "none";
+        icon.setAttribute("src", "./assets/medias/icons/chevron-up.svg");
+        input.setAttribute("placeholder", "Rechercher une recette");
+        list.style.display = "flex";
+        list.classList.add("row");
+        filterDOM.setAttribute("select","open");
+        
         open = true;
-    }else{
 
-        ingredientsSelectDOM.classList.add("col-2");
-        ingredientsSelectDOM.classList.remove("col-6");
-        ingredientsLabel.style.display = "block";
-        ingredientsIcon.setAttribute("src", "./assets/medias/icons/chevron-down.svg");
-        ingredientsInput.setAttribute("placeholder", "");
-        ingredientsList.style.display = "none";
-        ingredientsList.innerHTML = "";
-
-        open = false;
+        return true;
     }
+
+    if (filterDOM.getAttribute("select") == "close" && open == true) {
+        const selectOpen = filterDOM.parentElement.querySelector("div[select='open']");
+        
+        const selectOpenlabel = selectOpen.querySelector(".select__input label");
+        const selectOpenicon = selectOpen.querySelector(".select__input img");
+        const selectOpeninput = selectOpen.querySelector(".select__input input");
+        const selectOpenlist = selectOpen.querySelector(".select__choises");
+
+        selectOpen.classList.add("col-2");
+        selectOpen.classList.remove("col-6");
+        selectOpenlabel.style.display = "block";
+        selectOpenicon.setAttribute("src", "./assets/medias/icons/chevron-down.svg");
+        selectOpeninput.setAttribute("placeholder", "");
+        selectOpenlist.style.display = "none";
+        selectOpenlist.classList.remove("row");
+        selectOpen.setAttribute("select","close");
+
+        
+        filterDOM.classList.add("col-6");
+        filterDOM.classList.remove("col-2");
+        label.style.display = "none";
+        icon.setAttribute("src", "./assets/medias/icons/chevron-up.svg");
+        input.setAttribute("placeholder", "Rechercher une recette");
+        list.style.display = "flex";
+        list.classList.add("row");
+        filterDOM.setAttribute("select","open");
+        return true;
+    }
+
+    if (filterDOM.getAttribute("select") == "open" && open == true) {
+        
+        filterDOM.classList.add("col-2");
+        filterDOM.classList.remove("col-6");
+        label.style.display = "block";
+        icon.setAttribute("src", "./assets/medias/icons/chevron-down.svg");
+        input.setAttribute("placeholder", "");
+        list.style.display = "none";
+        list.classList.remove("row");
+        filterDOM.setAttribute("select","close");
+
+        open = false
+
+        return true;
+    }
+
 }
 
-ingredientsIcon.addEventListener("click", function() {
-    displayList();
+/*ingredientsIcon.addEventListener("click", function() {
+    displayLists();
 })
 
 ingredientsInput.addEventListener("focus", function() {
-    displayList();
-})
+    displayLists();
+})*/
+
+
+// Utilisation de la délégation d'événement pour détecter sur quoi je "click"
+document.addEventListener("click",function(e){
+	const parent = e.target.parentElement.parentElement;
+	const target = e.target;
+	if(e.target && target.getAttribute("class") === "select"){
+		displayLists(parent);
+	}
+});
 
