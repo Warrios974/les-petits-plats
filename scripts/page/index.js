@@ -1,32 +1,32 @@
 //Import de la "Factory Photographer" (fonction)
 import { recipes } from "../data/recipes.js";
+import { filter } from "../models/filter.js";
 import { cardReceipt } from "../components/cardReceipt.js";
+import { initFilterDOM } from "../utils/formFilters.js";
 
-export let filterAppliance = [];
-export let filterUstensils = [];
+const filterFormDOM = document.querySelector("#formFilter fieldset");
+
+export const filtersDOM = {
+    "0" : filterFormDOM.querySelector("#formFilter #filterIngredients"), 
+    "1" : filterFormDOM.querySelector("#formFilter #filterAppliance"), 
+    "2" : filterFormDOM.querySelector("#formFilter #filterUstensils")
+}
+
 export let filterIngredients = [];
+export let filterAppliances = [];
+export let filterUstensils = [];
 
 //Récupérer les infos des photographers dans le JSON
 async function getRecettes() {
 	return recipes;
 }
-async function initData() {
+
+export async function setFilters() {
 	// Récupère les datas des photographes et de leurs medias
 	const receipts = await getRecettes();
-
-	// [...new Set(tabFilterIngredients)] utilisation du ECMAScript 6
-	// Ajoute dans les tableaux
-	let tabFilterAppliance = [];
-	receipts.forEach((receipt) => { tabFilterAppliance.push(receipt['appliance']) })
-	filterAppliance = [...new Set(tabFilterAppliance)];
-	// Ajoute dans les tableaux
-	let tabFilterUstensils = [];
-	receipts.forEach((receipt) => { receipt['ustensils'].forEach((ustensil) => { tabFilterUstensils.push(ustensil) }) })
-	filterUstensils = [...new Set(tabFilterUstensils)];
-	// Ajoute dans les tableaux
-	let tabFilterIngredients = [];
-	receipts.forEach((receipt) => { receipt['ingredients'].forEach((ingredient) => { tabFilterIngredients.push(ingredient['ingredient']) }) })
-	filterIngredients = [...new Set(tabFilterIngredients)];
+	filterIngredients = filter(receipts).getIngredientFilter();
+	filterAppliances = filter(receipts).getAppliancesFilter();
+	filterUstensils = filter(receipts).getUstensilsFilter();
 }
 
 //Fonction pour afficher les photographers
@@ -44,17 +44,15 @@ async function displayData(receipts) {
 	}
 }
 
-//Fonction pour afficher les photographers
-async function setFilter() {
-	
-}
-
 async function init() {
 	// Récupère les datas des photographes
 	const receipts = await getRecettes();
-	await initData();
+	await setFilters();
 	displayData(receipts);
-	setFilter();
+	let filters = [filterIngredients, filterAppliances, filterUstensils]
+	for (let index = 0; index < 3; index++) {
+		initFilterDOM(filters[index],filtersDOM[index]);
+	}
 }
     
 init();
