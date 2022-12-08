@@ -1,31 +1,8 @@
 //Import de la "Factory Photographer" (fonction)
-import { filter } from "../models/filter.js";
-import { filterIngredients, filterAppliances, filterUstensils,filtersDOM } from "../page/index.js";
+import { filters } from "../models/filter.js";
+import { filtersDOM } from "../page/index.js";
 
 let open = false;
-
-//Element ingredients select
-/*const ingredientsLabel = filtersDOM["Ingredients"].querySelector("label");
-const ingredientsIcon = filtersDOM["Ingredients"].querySelector("img");
-const ingredientsInput = filtersDOM["Ingredients"].querySelector("input");
-const ingredientsList = filtersDOM["Ingredients"].querySelector(".select__choises");*/
-
-export function initFilterDOM(filter,filterDOM){
-    
-    const List = filterDOM.querySelector(".select__choises");
-
-    let limite;
-
-    filter.length > 30 ? limite = 30 : limite = filter.length;
-
-    for (let index = 0; index < limite; index++) {
-        const li = document.createElement( "li" );
-        const thisFilter = filter;
-        li.setAttribute("class", "col-4 p-2");
-        li.textContent = thisFilter[index];
-        List.appendChild(li);
-    }
-}
 
 function displayLists(filterDOM) {
     
@@ -44,6 +21,7 @@ function displayLists(filterDOM) {
         list.style.display = "flex";
         list.classList.add("row");
         filterDOM.setAttribute("select","open");
+        input.focus();
         
         open = true;
 
@@ -66,6 +44,7 @@ function displayLists(filterDOM) {
         selectOpenlist.style.display = "none";
         selectOpenlist.classList.remove("row");
         selectOpen.setAttribute("select","close");
+        selectOpeninput.value = "";
 
         
         filterDOM.classList.add("col-6");
@@ -76,10 +55,11 @@ function displayLists(filterDOM) {
         list.style.display = "flex";
         list.classList.add("row");
         filterDOM.setAttribute("select","open");
+
         return true;
     }
 
-    if (filterDOM.getAttribute("select") == "open" && open == true) {
+    if (filterDOM.getAttribute("select") == "open" && open == true && document.activeElement != input) {
         
         filterDOM.classList.add("col-2");
         filterDOM.classList.remove("col-6");
@@ -89,29 +69,46 @@ function displayLists(filterDOM) {
         list.style.display = "none";
         list.classList.remove("row");
         filterDOM.setAttribute("select","close");
+        input.value = "";
 
         open = false
 
         return true;
     }
 
+    if (filterDOM.getAttribute("select") == "open" && open == true && document.activeElement === input) {
+        open = true;
+        return true;
+    }
 }
-
-/*ingredientsIcon.addEventListener("click", function() {
-    displayLists();
-})
-
-ingredientsInput.addEventListener("focus", function() {
-    displayLists();
-})*/
-
 
 // Utilisation de la délégation d'événement pour détecter sur quoi je "click"
 document.addEventListener("click",function(e){
-	const parent = e.target.parentElement.parentElement;
 	const target = e.target;
-	if(e.target && target.getAttribute("class") === "select"){
+	if(target && target.getAttribute("filter") === "yes"){
+        const parent = e.target.parentElement.parentElement;
 		displayLists(parent);
 	}
+    if (target.parentElement.classList[1] == "select__choises") {
+        const idFilter = target.parentElement.parentElement.getAttribute("id");
+        const targetValue = target.textContent;
+        console.log(idFilter)
+        console.log("Ajout de " + target.textContent + " dans les filtres");
+
+        filtersDOM.updateAfilterDOM(targetValue,idFilter);
+        filtersDOM.addTagsFiltersInDOM(targetValue);
+    }
 });
 
+document.querySelector("#filterIngredients input").addEventListener("focus", function(e) {
+    const parent = e.target.parentElement.parentElement;
+    displayLists(parent);
+})
+document.querySelector("#filterAppliances input").addEventListener("focus", function(e) {
+    const parent = e.target.parentElement.parentElement;
+    displayLists(parent);
+})
+document.querySelector("#filterUstensils input").addEventListener("focus", function(e) {
+    const parent = e.target.parentElement.parentElement;
+    displayLists(parent);
+})
