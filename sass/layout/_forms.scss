@@ -14,6 +14,7 @@ input{
 #formFilter{
     position: relative;
     > div:first-child{
+        position: relative;
         > label{
             position: absolute;
             right: 1em;
@@ -22,6 +23,20 @@ input{
         > input{
             width: 100%;
             background-color: map-get($map: $colors, $key: color-gray);
+        }
+    }
+
+    #tagsFilters{
+        > span{
+            background-color: map-get($map: $colors, $key: color-primary);
+            color: map-get($map: $colors, $key: color-white);
+            border-radius: 5px;
+            > img{
+                width: 1em;
+                height: 1em;
+                margin: 0 .7em .3em .7em;
+                cursor: pointer;
+            }
         }
     }
 }

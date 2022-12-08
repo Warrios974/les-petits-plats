@@ -13,7 +13,7 @@
             position: absolute;
             height: 100%;
             right: 0;
-            width: 2.7em;
+            width: 1.2em;
         }
         > label{
             position: absolute;
@@ -36,7 +36,7 @@
         right: 8px;
         display: none;
         border-radius: 5px;
-        width: 100.6%;
+        width: 100%;
         cursor: pointer;
         > li{
             color: map-get($map: $colors, $key: color-white);
