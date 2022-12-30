@@ -1,6 +1,7 @@
 //Import de la "Factory Photographer" (fonction)
-import { filters } from "../models/filter.js";
+import { receiptsGalery } from "../components/receiptsGalery.js";
 import { filtersDOM } from "../page/index.js";
+import { proxySearchReceipts } from "../proxy/proxySearchReceipts.js";
 
 let open = false;
 
@@ -88,15 +89,72 @@ document.addEventListener("click",function(e){
 	if(target && target.getAttribute("filter") === "yes"){
         const parent = e.target.parentElement.parentElement;
 		displayLists(parent);
+        
+        return true;
 	}
-    if (target.parentElement.classList[1] == "select__choises") {
+    if (target.parentElement && target.parentElement.classList[1] == "select__choises") {
         const idFilter = target.parentElement.parentElement.getAttribute("id");
         const targetValue = target.textContent;
-        console.log(idFilter)
-        console.log("Ajout de " + target.textContent + " dans les filtres");
 
-        filtersDOM.updateAfilterDOM(targetValue,idFilter);
-        filtersDOM.addTagsFiltersInDOM(targetValue);
+        filtersDOM.updateAfilterDOM(targetValue,idFilter,"DESC");
+
+        switch (idFilter) {
+            case "filterIngredients":
+                const theFilterOne = filtersDOM.updateTheFilter("ingredients",targetValue,"INC");
+                filtersDOM.addTagsFiltersInDOM(targetValue,"ingredients");
+                const dataOne = proxySearchReceipts().proxySearch(theFilterOne);
+                receiptsGalery(dataOne);
+            break;
+            case "filterAppliances":
+                const theFilterTwo = filtersDOM.updateTheFilter("appliances",targetValue,"INC");
+                filtersDOM.addTagsFiltersInDOM(targetValue,"appliances");
+                const dataTwo = proxySearchReceipts().proxySearch(theFilterTwo);
+                receiptsGalery(dataTwo);
+            break;
+            case "filterUstensils":
+                const theFilterThree = filtersDOM.updateTheFilter("ustensils",targetValue,"INC");
+                filtersDOM.addTagsFiltersInDOM(targetValue,"ustensils");
+                const dataThree = proxySearchReceipts().proxySearch(theFilterThree);
+                receiptsGalery(dataThree);
+            break;
+            default:
+            break;
+        }
+        
+    
+        return true;
+    }
+
+    if (target.parentElement.parentElement && target.parentElement.parentElement.getAttribute("id") == "tagsFilters") {
+        const typeFilter = target.parentElement.getAttribute("type");
+        const span = target.parentElement;
+        const targetValue = target.parentElement.textContent;
+
+        filtersDOM.deleteTagsFiltersInDOM(span);
+        switch (typeFilter) {
+            case "ingredients":
+                const theFilterOne = filtersDOM.updateTheFilter("ingredients",targetValue,"DESC")
+                filtersDOM.updateAfilterDOM(targetValue,"ingredients","INC");
+                const dataOne = proxySearchReceipts().proxySearch(theFilterOne);
+                receiptsGalery(dataOne);
+            break;
+            case "appliances":
+                const theFilterTwo = filtersDOM.updateTheFilter("appliances",targetValue,"DESC")
+                filtersDOM.updateAfilterDOM(targetValue,"appliances","INC");
+                const dataTwo = proxySearchReceipts().proxySearch(theFilterTwo);
+                receiptsGalery(dataTwo);
+            break;
+            case "ustensils":
+                const theFilterThree = filtersDOM.updateTheFilter("ustensils",targetValue,"DESC")
+                filtersDOM.updateAfilterDOM(targetValue,"ustensils","INC");
+                const dataThree = proxySearchReceipts().proxySearch(theFilterThree);
+                receiptsGalery(dataThree);
+            break;
+            default:
+            break;
+        }
+        
+        return true;
     }
 });
 
@@ -111,4 +169,19 @@ document.querySelector("#filterAppliances input").addEventListener("focus", func
 document.querySelector("#filterUstensils input").addEventListener("focus", function(e) {
     const parent = e.target.parentElement.parentElement;
     displayLists(parent);
+})
+document.querySelector("#seacrh").addEventListener("input", function(e) {
+    const value = e.target.value;
+    
+    if (e.target.value.length >= 3) {
+        const theFilter = filtersDOM.updateTheFilter("keyword",value,"INC");
+        const data = proxySearchReceipts().proxySearch(theFilter);
+        receiptsGalery(data);
+    }
+
+    if (e.target.value.length < 3) {
+        const theFilter = filtersDOM.updateTheFilter("keyword",value,"DESC");
+        const data = proxySearchReceipts().proxySearch(theFilter);
+        receiptsGalery(data);
+    }
 })
