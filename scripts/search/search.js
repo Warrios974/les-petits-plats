@@ -1,6 +1,5 @@
 import { recipes } from "../data/recipes.js";
 
-export let receiptsFilted;
 
 export function search(theFilter,data) {
 
@@ -8,7 +7,7 @@ export function search(theFilter,data) {
         return data;
     }
 
-    receiptsFilted = recipes;
+    let receiptsFilted = recipes;
 
     if (theFilter["empty"] == true) {
         return recipes;
@@ -17,26 +16,35 @@ export function search(theFilter,data) {
     if (theFilter["empty"] == false) {
         if (theFilter["keyword"]) {
             let newTab = [];
-            recipes.forEach((receipt) => {
+            receiptsFilted.forEach((receipt) => {
                 const keyword = theFilter["keyword"].toLowerCase();
                 const name = receipt["name"].toLowerCase();
                 const description = receipt["description"].toLowerCase();
-                if (name.includes(keyword) || description.includes(keyword)) {
-                    newTab.push(receipt)
-                }
+                name.includes(keyword) || description.includes(keyword) ? newTab.push(receipt) : "";
+
+                receipt["ingredients"].forEach((ingredient) => {
+                    const ingredientName = ingredient["ingredient"].toLowerCase();
+                    ingredientName.includes(keyword) ? newTab.push(receipt) : "";
+                });
             });
             receiptsFilted = newTab;
         }
 
+        //Tri par Ingredient
         if (theFilter["ingredients"].length != 0) {
+            
             let newTab = [];
+            let isReceiptValid = false;
+
             receiptsFilted.forEach((receipt) => { 
-                receipt["ingredients"].forEach((ingredient) => { 
-                    theFilter["ingredients"].forEach((ingredientFilter) => { 
-                        ingredientFilter["ingredient"] == ingredient["ingredient"] ? newTab.push(receipt) : "";
-                    });
+                theFilter["ingredients"].forEach((ingredientFilter) => { 
+                    isReceiptValid = receipt["ingredients"].find((ig) => ig.ingredient == ingredientFilter.ingredient);
+                    if( !isReceiptValid ) return;
                 });
+                if( isReceiptValid ) newTab.push(receipt);
+                isReceiptValid = false;
             });
+            
             receiptsFilted = newTab;
         }
         
@@ -59,6 +67,7 @@ export function search(theFilter,data) {
             });
             receiptsFilted = newTab;
         }
+        
         
     }
 
