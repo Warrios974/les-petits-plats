@@ -1,5 +1,3 @@
-import { receiptsFilted } from "./search.js";
-
 export let theFilter = {
     "keyword" : "",
     "ingredients" : [],
@@ -20,6 +18,10 @@ export function filters(data) {
     let tabIngredients = [];
     let tabAppliances = [];
     let tabUstensils = [];
+
+    const receipts = data;
+
+    let receiptsFilted = [];
 
     initFilters();
     
@@ -85,58 +87,39 @@ export function filters(data) {
         if (incORdesc == "DESC") {
             switch (filter) {
                 case "filterIngredients":
-                    tabIngredients = tabIngredients.filter(item => item !== elem);
-                    initFiltersForDOM("ingredient");
-                    initFilters();
+                    filterIngredients = filterIngredients.filter(item => item !== elem);
                 break;
                 case "filterAppliances":
-                    tabAppliances = tabAppliances.filter(item => item !== elem);
-                    initFiltersForDOM("appliance");
-                    initFilters();
+                    filterAppliances = filterAppliances.filter(item => item !== elem);
                 break;
                 case "filterUstensils":
-                    tabUstensils = tabUstensils.filter(item => item !== elem);
-                    initFiltersForDOM("ustensil");
-                    initFilters();
+                    filterUstensils = filterUstensils.filter(item => item !== elem);
                 break;
             
                 default:
                 break;
             }
 
+            initFiltersForDOM("ingredient");
+            initFiltersForDOM("appliance");
+            initFiltersForDOM("ustensil");
+
             return true;
         }
         if (incORdesc == "INC") {
-            switch (filter) {
-                case "ingredients":
-                    tabIngredients.push(elem);
-                    initFiltersForDOM("ingredient");
-                    initFilters();
-                break;
-                case "appliances":
-                    tabAppliances.push(elem);
-                    initFiltersForDOM("appliance");
-                    initFilters();
-                break;
-                case "ustensils":
-                    tabUstensils.push(elem);
-                    initFiltersForDOM("ustensil");
-                    initFilters();
-                break;
-            
-                default:
-                break;
-            }
+            initFiltersForDOM("ingredient");
+            initFiltersForDOM("appliance");
+            initFiltersForDOM("ustensil");
 
             return true;
         }
     }
 
     function initFiltersForDOM(elements) {
-
-        const filterIngredientsLimited = tabIngredients.slice(0,30);
-        const filterAppliancesLimited = tabAppliances.slice(0,tabAppliances.length);
-        const filterUstensilsLimited = tabUstensils.slice(0,30);
+        
+        const filterIngredientsLimited = filterIngredients.length > 30 ? filterIngredients.slice(0,30) : filterIngredients;
+        const filterAppliancesLimited = filterAppliances.slice(0,filterAppliances.length);
+        const filterUstensilsLimited = filterUstensils > 30 ? filterUstensils.slice(0,30) : filterUstensils;
         
         switch (elements) {
             case "ingredient":
@@ -220,28 +203,40 @@ export function filters(data) {
 
     function initFilters(){
         let tabFilterIngredients = [];
-        let tabFilterAppliance = [];
-        let tabFilterUstensils = [];
+        data.forEach((receipt) => { receipt['ingredients'].forEach((ingredient) => { tabFilterIngredients.push(ingredient['ingredient']) }) })
+        tabIngredients = [...new Set(tabFilterIngredients)];
+        filterIngredients = tabIngredients;
+        filterIngredients = filterIngredients.sort();
 
-        if (receiptsFilted) {
-            receiptsFilted.forEach((receipt) => { receipt['ingredients'].forEach((ingredient) => { tabFilterIngredients.push(ingredient['ingredient']) }) })
-            tabIngredients = [...new Set(tabFilterIngredients)];
-    
-            receiptsFilted.forEach((receipt) => { tabFilterAppliance.push(receipt['appliance']) })
-            tabAppliances = [...new Set(tabFilterAppliance)];
-    
-            receiptsFilted.forEach((receipt) => { receipt['ustensils'].forEach((ustensil) => { tabFilterUstensils.push(ustensil) }) })
-            tabUstensils = [...new Set(tabFilterUstensils)];
-        } else {
-            data.forEach((receipt) => { receipt['ingredients'].forEach((ingredient) => { tabFilterIngredients.push(ingredient['ingredient']) }) })
-            tabIngredients = [...new Set(tabFilterIngredients)];
-    
-            data.forEach((receipt) => { tabFilterAppliance.push(receipt['appliance']) })
-            tabAppliances = [...new Set(tabFilterAppliance)];
-    
-            data.forEach((receipt) => { receipt['ustensils'].forEach((ustensil) => { tabFilterUstensils.push(ustensil) }) })
-            tabUstensils = [...new Set(tabFilterUstensils)];
-        }
+        let tabFilterAppliance = [];
+        data.forEach((receipt) => { tabFilterAppliance.push(receipt['appliance']) })
+        tabAppliances = [...new Set(tabFilterAppliance)];
+        filterAppliances = tabAppliances;
+        filterIngredients = filterIngredients.sort();
+
+        let tabFilterUstensils = [];
+        data.forEach((receipt) => { receipt['ustensils'].forEach((ustensil) => { tabFilterUstensils.push(ustensil) }) })
+        tabUstensils = [...new Set(tabFilterUstensils)];
+        filterUstensils = tabUstensils;
+        filterIngredients = filterIngredients.sort();
+    }
+
+    function updatedFilters(receiptsFilted){
+
+        let tabFilterIngredients = [];
+        receiptsFilted.forEach((receipt) => { receipt['ingredients'].forEach((ingredient) => { tabFilterIngredients.push(ingredient['ingredient']) }) })
+        filterIngredients = [...new Set(tabFilterIngredients)];
+        filterIngredients = filterIngredients.sort();
+
+        let tabFilterAppliance = [];
+        receiptsFilted.forEach((receipt) => { tabFilterAppliance.push(receipt['appliance']) })
+        filterAppliances = [...new Set(tabFilterAppliance)];
+        filterIngredients = filterIngredients.sort();
+
+        let tabFilterUstensils = [];
+        receiptsFilted.forEach((receipt) => { receipt['ustensils'].forEach((ustensil) => { tabFilterUstensils.push(ustensil) }) })
+        filterUstensils = [...new Set(tabFilterUstensils)];
+        filterIngredients = filterIngredients.sort();
     }
 
     return { 
@@ -253,6 +248,7 @@ export function filters(data) {
         getUstensils,
         initFiltersForDOM,
         updateAfilterDOM,
+        updatedFilters,
         addTagsFiltersInDOM,
         deleteTagsFiltersInDOM,
         updateTheFilter
