@@ -19,9 +19,7 @@ export function filters(data) {
     let tabAppliances = [];
     let tabUstensils = [];
 
-    const receipts = data;
-
-    initFilters();
+    initFilters(data,theFilter);
     
     function getIngredientFilter() {
         return filterIngredients;
@@ -81,8 +79,56 @@ export function filters(data) {
         return theFilter;
     }
 
-    function updateAfilterDOM(elem,filter,incORdesc) {
-        if (incORdesc == "DESC") {
+    function updateAfilterDOM(elem,filter,action) {
+
+        if (action == "UP") {
+
+            switch (filter) {
+                case "searchIngredient":
+                    
+                    let newIngredientTab = [];
+                    const keywordIngredient = elem.toLowerCase();
+                    
+                    filterIngredients.forEach((ingredient) => {
+                        const nameIngredient = ingredient.toLowerCase();
+                        nameIngredient.includes(keywordIngredient) ? newIngredientTab.push(ingredient) : "";
+                    });
+
+                    initFiltersForDOM("ingredient",newIngredientTab);
+                break;
+                case "searchAppliance":
+                    
+                    let newApplianceTab = [];
+                    const keywordAppliance = elem.toLowerCase();
+                    
+                    filterAppliances.forEach((appliance) => {
+                        const nameAppliance = appliance.toLowerCase();
+                        nameAppliance.includes(keywordAppliance) ? newApplianceTab.push(appliance) : "";
+                    });
+
+                    initFiltersForDOM("appliance",newApplianceTab);
+                break;
+                case "searchUstensil":
+                    
+                    let newUstensilsTab = [];
+                    const keywordUstensils = elem.toLowerCase();
+                    
+                    filterUstensils.forEach((ustensil) => {
+                        const nameUstensils = ustensil.toLowerCase();
+                        nameUstensils.includes(keywordUstensils) ? newUstensilsTab.push(ustensil) : "";
+                    });
+
+                    initFiltersForDOM("ustensil",newUstensilsTab);
+                break;
+            
+                default:
+                break;
+            }
+
+            return true;
+        }
+
+        if (action == "DESC") {
             switch (filter) {
                 case "filterIngredients":
                     filterIngredients = filterIngredients.filter(item => item !== elem);
@@ -98,41 +144,38 @@ export function filters(data) {
                 break;
             }
 
-            initFiltersForDOM("ingredient");
-            initFiltersForDOM("appliance");
-            initFiltersForDOM("ustensil");
+            initFiltersForDOM("ingredient",filterIngredients);
+            initFiltersForDOM("appliance",filterAppliances);
+            initFiltersForDOM("ustensil",filterUstensils);
 
             return true;
         }
-        if (incORdesc == "INC") {
-            initFiltersForDOM("ingredient");
-            initFiltersForDOM("appliance");
-            initFiltersForDOM("ustensil");
+        if (action == "INC") {
+
+            initFiltersForDOM("ingredient",filterIngredients);
+            initFiltersForDOM("appliance",filterAppliances);
+            initFiltersForDOM("ustensil",filterUstensils);
 
             return true;
         }
     }
 
-    function initFiltersForDOM(elements) {
-        
-        const filterIngredientsLimited = filterIngredients.length > 30 ? filterIngredients.slice(0,30) : filterIngredients;
-        const filterAppliancesLimited = filterAppliances.slice(0,filterAppliances.length);
-        const filterUstensilsLimited = filterUstensils > 30 ? filterUstensils.slice(0,30) : filterUstensils;
+    function initFiltersForDOM(elements,data) {
         
         switch (elements) {
             case "ingredient":
-                iniIngredientFilter();
+                iniIngredientFilter(data);
             break;
             case "appliance":
-                initApplianceFilter();
+                initApplianceFilter(data);
             break;
             case "ustensil":
-                initUstensilFilter();
+                initUstensilFilter(data);
             break;
             case "all":
-                iniIngredientFilter();
-                initApplianceFilter();
-                initUstensilFilter();
+                iniIngredientFilter(filterIngredients);
+                initApplianceFilter(filterAppliances);
+                initUstensilFilter(filterUstensils);
             break;
         
             default:
@@ -140,13 +183,13 @@ export function filters(data) {
         }
 
         /**/
-        function iniIngredientFilter() {
+        function iniIngredientFilter(data) {
             
             const filterIngredientDOM = filterFormDOM.querySelector("#formFilter #filterIngredients");
             const List = filterIngredientDOM.querySelector(".select__choises");
             List.innerHTML = "";
 
-            filterIngredientsLimited.forEach((ingredient) => {
+            data.forEach((ingredient) => {
                 const li = document.createElement( "li" );
                 li.setAttribute("class", "col-4 p-2");
                 li.textContent = ingredient;
@@ -154,13 +197,13 @@ export function filters(data) {
             })
         }
 
-        function initApplianceFilter() {
+        function initApplianceFilter(data) {
 
             const filterApplianceDOM = filterFormDOM.querySelector("#formFilter #filterAppliances");
             const List = filterApplianceDOM.querySelector(".select__choises");
             List.innerHTML = "";
 
-            filterAppliancesLimited.forEach((appliance) => {
+            data.forEach((appliance) => {
                 const li = document.createElement( "li" );
                 li.setAttribute("class", "col-4 p-2");
                 li.textContent = appliance;
@@ -168,13 +211,13 @@ export function filters(data) {
             })
         }
 
-        function initUstensilFilter() {
+        function initUstensilFilter(data) {
 
             const filterUstensilDOM = filterFormDOM.querySelector("#formFilter #filterUstensils");
             const List = filterUstensilDOM.querySelector(".select__choises");
             List.innerHTML = "";
 
-            filterUstensilsLimited.forEach((ustensil) => {
+            data.forEach((ustensil) => {
                 const li = document.createElement( "li" );
                 li.setAttribute("class", "col-4 p-2");
                 li.textContent = ustensil;
@@ -186,7 +229,9 @@ export function filters(data) {
     function addTagsFiltersInDOM(nameTag,type) {
         const span = document.createElement( "span" );
         const img = document.createElement( "img" );
-        span.setAttribute("class", "col-4 p-2 m-2");
+        span.setAttribute("class","tag col-4 p-2 m-2")
+        const className = "tag--" + type;
+        span.classList.add(className);
         span.setAttribute("type", type);
         img.setAttribute("src","./assets/medias/icons/x-circle.svg");
         img.setAttribute("alt","");
@@ -199,27 +244,7 @@ export function filters(data) {
         nameTag.remove();
     }
 
-    function initFilters(){
-        let tabFilterIngredients = [];
-        data.forEach((receipt) => { receipt['ingredients'].forEach((ingredient) => { tabFilterIngredients.push(ingredient['ingredient']) }) })
-        tabIngredients = [...new Set(tabFilterIngredients)];
-        filterIngredients = tabIngredients;
-        filterIngredients = filterIngredients.sort();
-
-        let tabFilterAppliance = [];
-        data.forEach((receipt) => { tabFilterAppliance.push(receipt['appliance']) })
-        tabAppliances = [...new Set(tabFilterAppliance)];
-        filterAppliances = tabAppliances;
-        filterIngredients = filterIngredients.sort();
-
-        let tabFilterUstensils = [];
-        data.forEach((receipt) => { receipt['ustensils'].forEach((ustensil) => { tabFilterUstensils.push(ustensil) }) })
-        tabUstensils = [...new Set(tabFilterUstensils)];
-        filterUstensils = tabUstensils;
-        filterIngredients = filterIngredients.sort();
-    }
-
-    function updatedFilters(receiptsFilted,theFilter){
+    function initFilters(receiptsFilted,theFilter){
 
         let tabFilterIngredients = [];
         receiptsFilted.forEach((receipt) => { receipt['ingredients'].forEach((ingredient) => { tabFilterIngredients.push(ingredient['ingredient']) }) })
@@ -253,9 +278,9 @@ export function filters(data) {
         getIngredients,
         getAppliances,
         getUstensils,
+        initFilters,
         initFiltersForDOM,
         updateAfilterDOM,
-        updatedFilters,
         addTagsFiltersInDOM,
         deleteTagsFiltersInDOM,
         updateTheFilter
