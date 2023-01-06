@@ -1,3 +1,4 @@
+//Objet "Recette" Utile pour créer les cartes de recette
 export function receipt(data) {
 
     const { id, name, servings, ingredients, time, description, appliance, ustensils } = data;

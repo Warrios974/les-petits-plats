@@ -50,6 +50,7 @@ export function cardReceipt(data) {
 			span.innerHTML = '<strong>' + ingredient['ingredient'] + ' :</strong> ' + ingredient['quantity'] + ' ' + (ingredient['unit'] ? ingredient['unit'] : "") + '<br>';
 			pIngredients.appendChild(span);
 		});
+		
 		descriptionPartOne.appendChild(titleh3);
 		descriptionPartOne.appendChild(spanTime);
 		descriptionPartTwo.appendChild(pIngredients);

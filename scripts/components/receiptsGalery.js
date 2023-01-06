@@ -1,10 +1,11 @@
+//Import des fonction et variable nécesaire puis d'autres fichiers
 import { receiptsSection } from "../page/index.js";
 import { cardReceipt } from "../components/cardReceipt.js";
 
 export function receiptsGalery(data) {
 
     // Function qui va créer les carte
-    //Pour chaque photographer créer sa carte avec la fonction "createCardReceipt"
+    //Pour chaque recette créer sa carte avec la fonction "cardReceipt"
     receiptsSection.innerHTML = "";
     data.forEach((receipt) => { createCardReceipt(receipt); });
 
