@@ -4,13 +4,21 @@ let searchCache = [];
 
 export function proxySearchReceipts() {
 
-    function proxySearch(theFilter) {
+    function proxySearch(theFilter,incORdesc) {
 
         searchCache.forEach(element => {
-            if (JSON.stringify(theFilter) === JSON.stringify(element["filter"])) {
-                
+
+            const theFilterJSON = JSON.stringify(theFilter);
+            const elementFilterJSON  = JSON.stringify(element["filter"]);
+
+            console.log(theFilterJSON);
+            console.log(elementFilterJSON);
+
+            if ( theFilterJSON == elementFilterJSON) {
+                debugger
                 console.log("Data from proxy");
-                search(theFilter,element["data"])
+
+                search(theFilter,incORdesc,element["data"])
                 
                 return element["data"];
     
@@ -19,7 +27,7 @@ export function proxySearchReceipts() {
 
         console.log("Add in cache")
 
-        const data = search(theFilter);
+        const data = search(theFilter,incORdesc);
 
         searchCache.push({
             "filter" : theFilter,
@@ -27,6 +35,7 @@ export function proxySearchReceipts() {
         });
         
 
+        console.log(searchCache)
         return data;
         
     }
