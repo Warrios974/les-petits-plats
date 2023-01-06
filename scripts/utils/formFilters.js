@@ -101,24 +101,24 @@ document.addEventListener("click",function(e){
             case "filterIngredients":
                 filtersDOM.addTagsFiltersInDOM(targetValue,"ingredients");
                 const theFilterOne = filtersDOM.updateTheFilter("ingredients",targetValue,"INC");
-                const dataOne = proxySearchReceipts().proxySearch(theFilterOne);
-                filtersDOM.updatedFilters(dataOne);
+                const dataOne = proxySearchReceipts().proxySearch(theFilterOne,"INC");
+                filtersDOM.updatedFilters(dataOne,theFilterOne);
                 filtersDOM.updateAfilterDOM(targetValue,idFilter,"DESC");
                 receiptsGalery(dataOne);
             break;
             case "filterAppliances":
-                const theFilterTwo = filtersDOM.updateTheFilter("appliances",targetValue,"INC");
                 filtersDOM.addTagsFiltersInDOM(targetValue,"appliances");
-                const dataTwo = proxySearchReceipts().proxySearch(theFilterTwo);
-                filtersDOM.updatedFilters(dataTwo);
+                const theFilterTwo = filtersDOM.updateTheFilter("appliances",targetValue,"INC");
+                const dataTwo = proxySearchReceipts().proxySearch(theFilterTwo,"INC");
+                filtersDOM.updatedFilters(dataTwo,theFilterTwo);
                 filtersDOM.updateAfilterDOM(targetValue,idFilter,"DESC");
                 receiptsGalery(dataTwo);
             break;
             case "filterUstensils":
-                const theFilterThree = filtersDOM.updateTheFilter("ustensils",targetValue,"INC");
                 filtersDOM.addTagsFiltersInDOM(targetValue,"ustensils");
-                const dataThree = proxySearchReceipts().proxySearch(theFilterThree);
-                filtersDOM.updatedFilters(dataThree);
+                const theFilterThree = filtersDOM.updateTheFilter("ustensils",targetValue,"INC");
+                const dataThree = proxySearchReceipts().proxySearch(theFilterThree,"INC");
+                filtersDOM.updatedFilters(dataThree,theFilterThree);
                 filtersDOM.updateAfilterDOM(targetValue,idFilter,"DESC");
                 receiptsGalery(dataThree);
             break;
@@ -140,22 +140,22 @@ document.addEventListener("click",function(e){
         switch (typeFilter) {
             case "ingredients":
                 const theFilterOne = filtersDOM.updateTheFilter("ingredients",targetValue,"DESC");
-                const dataOne = proxySearchReceipts().proxySearch(theFilterOne);
-                filtersDOM.updatedFilters(dataOne);
+                const dataOne = proxySearchReceipts().proxySearch(theFilterOne,"DESC");
+                filtersDOM.updatedFilters(dataOne,theFilterOne);
                 filtersDOM.updateAfilterDOM(targetValue,"ingredients","INC");
                 receiptsGalery(dataOne);
             break;
             case "appliances":
                 const theFilterTwo = filtersDOM.updateTheFilter("appliances",targetValue,"DESC");
-                const dataTwo = proxySearchReceipts().proxySearch(theFilterTwo);
-                filtersDOM.updatedFilters(dataTwo);
+                const dataTwo = proxySearchReceipts().proxySearch(theFilterTwo,"DESC");
+                filtersDOM.updatedFilters(dataTwo,theFilterTwo);
                 filtersDOM.updateAfilterDOM(targetValue,"appliances","INC");
                 receiptsGalery(dataTwo);
             break;
             case "ustensils":
                 const theFilterThree = filtersDOM.updateTheFilter("ustensils",targetValue,"DESC");
-                const dataThree = proxySearchReceipts().proxySearch(theFilterThree);
-                filtersDOM.updatedFilters(dataThree);
+                const dataThree = proxySearchReceipts().proxySearch(theFilterThree,"DESC");
+                filtersDOM.updatedFilters(dataThree,theFilterThree);
                 filtersDOM.updateAfilterDOM(targetValue,"ustensils","INC");
                 receiptsGalery(dataThree);
             break;
