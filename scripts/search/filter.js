@@ -1,7 +1,7 @@
 export let theFilter = {
     "keyword" : "",
     "ingredients" : [],
-    "appliances" : "",
+    "appliances" : [],
     "ustensils" : [],
     "empty" : true
 };
@@ -20,8 +20,6 @@ export function filters(data) {
     let tabUstensils = [];
 
     const receipts = data;
-
-    let receiptsFilted = [];
 
     initFilters();
     
@@ -221,22 +219,31 @@ export function filters(data) {
         filterIngredients = filterIngredients.sort();
     }
 
-    function updatedFilters(receiptsFilted){
+    function updatedFilters(receiptsFilted,theFilter){
 
         let tabFilterIngredients = [];
         receiptsFilted.forEach((receipt) => { receipt['ingredients'].forEach((ingredient) => { tabFilterIngredients.push(ingredient['ingredient']) }) })
         filterIngredients = [...new Set(tabFilterIngredients)];
         filterIngredients = filterIngredients.sort();
+        theFilter["ingredients"].forEach((ingredientFilter) => {
+            filterIngredients = filterIngredients.filter(ing => ing !== ingredientFilter.ingredient);
+        });
 
         let tabFilterAppliance = [];
         receiptsFilted.forEach((receipt) => { tabFilterAppliance.push(receipt['appliance']) })
         filterAppliances = [...new Set(tabFilterAppliance)];
-        filterIngredients = filterIngredients.sort();
+        filterAppliances = filterAppliances.sort();
+        theFilter["ustensils"].forEach((applianceFilter) => {
+            filterAppliances = filterAppliances.filter(app => app !== applianceFilter);
+        });
 
         let tabFilterUstensils = [];
         receiptsFilted.forEach((receipt) => { receipt['ustensils'].forEach((ustensil) => { tabFilterUstensils.push(ustensil) }) })
         filterUstensils = [...new Set(tabFilterUstensils)];
-        filterIngredients = filterIngredients.sort();
+        filterUstensils = filterUstensils.sort();
+        theFilter["ustensils"].forEach((ustensilFilter) => {
+            filterUstensils = filterUstensils.filter(ust => ust !== ustensilFilter);
+        });
     }
 
     return { 
