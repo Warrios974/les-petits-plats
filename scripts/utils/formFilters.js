@@ -43,8 +43,6 @@ function displayLists(filterDOM,filterList) {
         nameFilter = "un ustensile";
     }
 
-    filterList ? console.log(filterList.length) : "";
-
     if (filterList && filterList.length == 0) {
         console.log(filterList.length)
         //Fermeture du filtre

@@ -20,60 +20,52 @@
         </header>
         <main>
             <section>
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-12 mt-3">
-                            <form id="formFilter" class="form" action="index.html" method="post">
-                                <div class="mb-3">
-                                    <label for="seacrh"><img src="./assets/medias/icons/search.svg" alt="Seacrh"></label>
-                                    <input class="" type="text" name="seacrh" id="seacrh" placeholder="Rechercher une recette">
-                                </div>
-                                <div id="tagsFilters">
-
-                                </div>
-                                <fieldset id="filters" class="mt-3">
-                                    <div id="filterIngredients" class="col-2 select select--blue" select="close">
-                                        <div class="row select__input">
-                                            <label for="seacrhIngredient">Ingrédients</label>
-                                            <img src="./assets/medias/icons/chevron-down.svg" alt="" class="p-0 m-0" filter="yes">
-                                            <input class="" type="text" name="searchIngredient" id="searchIngredient">
-                                        </div>
-                                        <ul class="pb-2 select__choises">
-                                            
-                                        </ul>
-                                    </div>
-                                    <div id="filterAppliances" class="col-2 select select--cyan" select="close">
-                                        <div class="row select__input">
-                                            <label for="seacrhAppliance">Appareils</label>
-                                            <img src="./assets/medias/icons/chevron-down.svg" alt="" class="p-0 m-0" filter="yes">
-                                            <input class="" type="text" name="searchAppliance" id="searchAppliance">
-                                        </div>
-                                        <ul class="pb-2 select__choises">
-                                            
-                                        </ul>
-                                    </div>
-                                    <div id="filterUstensils" class="col-2 select select--orange" select="close">
-                                        <div class="row select__input">
-                                            <label for="seacrhUstensils">Ustensiles</label>
-                                            <img src="./assets/medias/icons/chevron-down.svg" alt="" class="p-0 m-0" filter="yes">
-                                            <input class="" type="text" name="searchUstensil" id="searchUstensil">
-                                        </div>
-                                        <ul class="pb-2 select__choises">
-                                            
-                                        </ul>
-                                    </div>
-                                </fieldset>
-                            </form>
-                        </div> 
+                <form id="formFilter" class="container form" action="index.html" method="post">
+                    <div>
+                        <label for="seacrh"><img src="./assets/medias/icons/search.svg" alt="Seacrh"></label>
+                        <input class="" type="text" name="seacrh" id="seacrh" placeholder="Rechercher une recette">
                     </div>
-                </div>
+                    <div id="tagsFilters">
+
+                    </div>
+                    <fieldset id="filters">
+                        <div id="filterIngredients" class="col-2 select select--blue" select="close">
+                            <div class="select__input">
+                                <label for="seacrhIngredient">Ingrédients</label>
+                                <img src="./assets/medias/icons/chevron-down.svg" alt="" filter="yes">
+                                <input class="" type="text" name="searchIngredient" id="searchIngredient">
+                            </div>
+                            <ul class="pb-2 select__choises">
+                                
+                            </ul>
+                        </div>
+                        <div id="filterAppliances" class="col-2 select select--cyan" select="close">
+                            <div class="select__input">
+                                <label for="seacrhAppliance">Appareils</label>
+                                <img src="./assets/medias/icons/chevron-down.svg" alt="" filter="yes">
+                                <input class="" type="text" name="searchAppliance" id="searchAppliance">
+                            </div>
+                            <ul class="pb-2 select__choises">
+                                
+                            </ul>
+                        </div>
+                        <div id="filterUstensils" class="col-2 select select--orange" select="close">
+                            <div class="select__input">
+                                <label for="seacrhUstensils">Ustensiles</label>
+                                <img src="./assets/medias/icons/chevron-down.svg" alt="" filter="yes">
+                                <input class="" type="text" name="searchUstensil" id="searchUstensil">
+                            </div>
+                            <ul class="pb-2 select__choises">
+                                
+                            </ul>
+                        </div>
+                    </fieldset>
+                </form>
             </section>
             <section>
                 <div class="container">
-                    <div class="row justify-content-center">
-                        <div id="receiptsGalery" class="row col-12">
-                            
-                        </div>
+                    <div id="receiptsGalery" class="row justify-content-left">
+                        
                     </div>
                 </div>
             </section>

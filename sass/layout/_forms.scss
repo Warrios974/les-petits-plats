@@ -10,6 +10,7 @@ input{
     > div:first-child{
         position: relative;
         > label{
+            width: 1em;
             position: absolute;
             right: 1em;
             top: 25%;
@@ -21,8 +22,15 @@ input{
         }
     }
 
+    #tagsFilters{
+        display: flex;
+        justify-content: flex-start;
+        padding: 1em 0;
+    }
+
     #filters{
         > div ul{
+            width: 100%;
             max-height: 22em;
             overflow-y: auto;
         }
