@@ -1,11 +1,5 @@
-form{
-    
-}
-
-.form{
-}
-
 input{
+    color: map-get($map: $colors, $key: color-white);
     border-radius: 5px;
     border: 0;
     padding: 1em .5em;
@@ -26,17 +20,10 @@ input{
         }
     }
 
-    #tagsFilters{
-        > span{
-            background-color: map-get($map: $colors, $key: color-primary);
-            color: map-get($map: $colors, $key: color-white);
-            border-radius: 5px;
-            > img{
-                width: 1em;
-                height: 1em;
-                margin: 0 .7em .3em .7em;
-                cursor: pointer;
-            }
+    #filters{
+        > div ul{
+            max-height: 22em;
+            overflow-y: auto;
         }
     }
 }
