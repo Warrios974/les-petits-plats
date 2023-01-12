@@ -21,7 +21,7 @@ const inputSearchUstensil = document.querySelector("#filterUstensils input");
 const inputTab = [inputSearchIngredient, inputSearchAppliance, inputSearchUstensil];
 
 //Fonction qui gére l'affichage des menu des filtres
-function displayLists(filterDOM) {
+function displayLists(filterDOM,filterList) {
     
     //Déclaration des éléments du filtre
     const label = filterDOM.querySelector(".select__input label");
@@ -29,16 +29,51 @@ function displayLists(filterDOM) {
     const input = filterDOM.querySelector(".select__input input");
     const list = filterDOM.querySelector(".select__choises");
 
+    const idFilter = filterDOM.getAttribute("id");
+
+    let nameFilter ;
+
+    if (idFilter == "filterIngredients") {
+        nameFilter = "un ingredient";
+    }
+    if (idFilter == "filterAppliances") {
+        nameFilter = "un appareil";
+    }
+    if (idFilter == "filterUstensils") {
+        nameFilter = "un ustensile";
+    }
+
+    filterList ? console.log(filterList.length) : "";
+
+    if (filterList && filterList.length == 0) {
+        console.log(filterList.length)
+        //Fermeture du filtre
+        filterDOM.classList.add("col-2");
+        filterDOM.classList.remove("col-6");
+        label.style.display = "block";
+        icon.setAttribute("src", "./assets/medias/icons/chevron-down.svg");
+        input.setAttribute("placeholder", "");
+        list.style.display = "none";
+        list.classList.remove("row");
+        filterDOM.setAttribute("select","close");
+        input.value = "";
+
+        //Indique que maintenant tous les filtres sont fermés
+        open = false
+
+        return true;
+    }
+
     //Affichage du menu du filtre si il est fermer 
     //mais qu'aucun autre filtre est ouvert
-    if (filterDOM.getAttribute("select") == "close" && open == false) {
+    if (filterDOM.getAttribute("select") == "close" && open == false && filterList == null) {
         
         //Affichage du filtre 
         filterDOM.classList.add("col-6");
         filterDOM.classList.remove("col-2");
         label.style.display = "none";
         icon.setAttribute("src", "./assets/medias/icons/chevron-up.svg");
-        input.setAttribute("placeholder", "Rechercher une recette");
+        input.setAttribute("placeholder", "Rechercher " + nameFilter);
         list.style.display = "flex";
         list.classList.add("row");
         filterDOM.setAttribute("select","open");
@@ -52,7 +87,7 @@ function displayLists(filterDOM) {
 
     //Affichage du menu du filtre si il est fermer 
     //quand un autre filtre est ouvert
-    if (filterDOM.getAttribute("select") == "close" && open == true) {
+    if (filterDOM.getAttribute("select") == "close" && open == true && filterList == null) {
         const selectOpen = filterDOM.parentElement.querySelector("div[select='open']");
         
         //Déclaration des élément du filtre ouvert
@@ -77,7 +112,7 @@ function displayLists(filterDOM) {
         filterDOM.classList.remove("col-2");
         label.style.display = "none";
         icon.setAttribute("src", "./assets/medias/icons/chevron-up.svg");
-        input.setAttribute("placeholder", "Rechercher une recette");
+        input.setAttribute("placeholder", "Rechercher " + nameFilter);
         list.style.display = "flex";
         list.classList.add("row");
         filterDOM.setAttribute("select","open");
@@ -88,7 +123,7 @@ function displayLists(filterDOM) {
     //Fermature du menu du filtre si il est ouvert 
     //quand un autre filtre est ouvert
     //et que l'élément active n'est pas l'input du filtre
-    if (filterDOM.getAttribute("select") == "open" && open == true && document.activeElement != input) {
+    if (filterDOM.getAttribute("select") == "open" && open == true && document.activeElement != input && filterList == null) {
         
         //Fermeture du filtre
         filterDOM.classList.add("col-2");
@@ -109,7 +144,7 @@ function displayLists(filterDOM) {
 
     
     //Quand on clic sur un autre input on garde la variable open à "true"
-    if (filterDOM.getAttribute("select") == "open" && open == true && document.activeElement === input) {
+    if (filterDOM.getAttribute("select") == "open" && open == true && document.activeElement === input && filterList == null) {
         open = true;
         return true;
     }
@@ -131,6 +166,7 @@ document.addEventListener("click",function(e){
     if (target.parentElement && target.parentElement.classList[1] == "select__choises") {
         const idFilter = target.parentElement.parentElement.getAttribute("id");
         const targetValue = target.textContent;
+        const filterDOM = document.getElementById(idFilter);
 
 
         switch (idFilter) {
@@ -140,8 +176,9 @@ document.addEventListener("click",function(e){
                 filtersDOM.addTagsFiltersInDOM(targetValue,"ingredients"); //Ajout l'élément cliquer dans la section des tags
                 const theFilterOne = filtersDOM.updateTheFilter("ingredients",targetValue,"INC"); //Met a jour le tableau des recherche
                 const dataOne = proxySearchReceipts().proxySearch(theFilterOne); //Envoi la recherche a la fonction search
-                filtersDOM.initFilters(dataOne,theFilterOne); //Mise a jour des tableaux de filtres
+                const filterList = filtersDOM.initFilters(dataOne,theFilterOne,idFilter); //Mise a jour des tableaux de filtres
                 filtersDOM.updateAfilterDOM(targetValue,idFilter,"DESC"); //Met a jour les filtres sur le DOM
+                displayLists(filterDOM,filterList);
                 receiptsGalery(dataOne); //Affiche les recettes dans le DOM
             }
             break;
@@ -151,8 +188,10 @@ document.addEventListener("click",function(e){
                 filtersDOM.addTagsFiltersInDOM(targetValue,"appliances");
                 const theFilterTwo = filtersDOM.updateTheFilter("appliances",targetValue,"INC");
                 const dataTwo = proxySearchReceipts().proxySearch(theFilterTwo);
-                filtersDOM.initFilters(dataTwo,theFilterTwo);
+                const filterList = filtersDOM.initFilters(dataTwo,theFilterTwo,idFilter); //Mise a jour des tableaux de filtres
                 filtersDOM.updateAfilterDOM(targetValue,idFilter,"DESC");
+                debugger
+                displayLists(filterDOM,filterList);
                 receiptsGalery(dataTwo);
             }
             break;
@@ -162,8 +201,9 @@ document.addEventListener("click",function(e){
                 filtersDOM.addTagsFiltersInDOM(targetValue,"ustensils");
                 const theFilterThree = filtersDOM.updateTheFilter("ustensils",targetValue,"INC");
                 const dataThree = proxySearchReceipts().proxySearch(theFilterThree);
-                filtersDOM.initFilters(dataThree,theFilterThree);
+                const filterList = filtersDOM.initFilters(dataThree,theFilterThree,idFilter); //Mise a jour des tableaux de filtres
                 filtersDOM.updateAfilterDOM(targetValue,idFilter,"DESC");
+                displayLists(filterDOM,filterList);
                 receiptsGalery(dataThree);
             }
             break;
