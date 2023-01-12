@@ -73,7 +73,7 @@ export function filters(data) {
 
             //En fonction de l'ID du filtre le tableau du filtre et mise a jour
             switch (idFilter) {
-                case "searchIngredient":
+                case "searchIngredient":{
                     
                     let newIngredientTab = [];
                     const keywordIngredient = elem.toLowerCase();
@@ -85,8 +85,9 @@ export function filters(data) {
                     });
 
                     initFiltersForDOM("ingredient",newIngredientTab);
+                }
                 break;
-                case "searchAppliance":
+                case "searchAppliance":{
                     
                     let newApplianceTab = [];
                     const keywordAppliance = elem.toLowerCase();
@@ -98,8 +99,9 @@ export function filters(data) {
                     });
 
                     initFiltersForDOM("appliance",newApplianceTab);
+                }
                 break;
-                case "searchUstensil":
+                case "searchUstensil":{
                     
                     let newUstensilsTab = [];
                     const keywordUstensils = elem.toLowerCase();
@@ -111,6 +113,8 @@ export function filters(data) {
                     });
 
                     initFiltersForDOM("ustensil",newUstensilsTab);
+
+                }
                 break;
             
                 default:

@@ -18,7 +18,7 @@ async function getRecettes() {
 async function displayData() {
 	
 	const receiptsGaleryData = proxySearchReceipts().proxySearch(theFilter);
-	const receiptsGaleryDOM = receiptsGalery(receiptsGaleryData);
+	receiptsGalery(receiptsGaleryData);
 }
 
 async function init() {

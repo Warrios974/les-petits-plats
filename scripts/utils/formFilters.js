@@ -135,7 +135,7 @@ document.addEventListener("click",function(e){
 
         switch (idFilter) {
             //si c'est dans le filtre ingredient
-            case "filterIngredients":
+            case "filterIngredients":{
                 inputSearchIngredient.value = ""
                 filtersDOM.addTagsFiltersInDOM(targetValue,"ingredients"); //Ajout l'élément cliquer dans la section des tags
                 const theFilterOne = filtersDOM.updateTheFilter("ingredients",targetValue,"INC"); //Met a jour le tableau des recherche
@@ -143,9 +143,10 @@ document.addEventListener("click",function(e){
                 filtersDOM.initFilters(dataOne,theFilterOne); //Mise a jour des tableaux de filtres
                 filtersDOM.updateAfilterDOM(targetValue,idFilter,"DESC"); //Met a jour les filtres sur le DOM
                 receiptsGalery(dataOne); //Affiche les recettes dans le DOM
+            }
             break;
             //si c'est dans le filtre appareil
-            case "filterAppliances":
+            case "filterAppliances":{
                 inputSearchAppliance.value = ""
                 filtersDOM.addTagsFiltersInDOM(targetValue,"appliances");
                 const theFilterTwo = filtersDOM.updateTheFilter("appliances",targetValue,"INC");
@@ -153,9 +154,10 @@ document.addEventListener("click",function(e){
                 filtersDOM.initFilters(dataTwo,theFilterTwo);
                 filtersDOM.updateAfilterDOM(targetValue,idFilter,"DESC");
                 receiptsGalery(dataTwo);
+            }
             break;
             //si c'est dans le filtre ustensile
-            case "filterUstensils":
+            case "filterUstensils":{
                 inputSearchUstensil.value = ""
                 filtersDOM.addTagsFiltersInDOM(targetValue,"ustensils");
                 const theFilterThree = filtersDOM.updateTheFilter("ustensils",targetValue,"INC");
@@ -163,6 +165,7 @@ document.addEventListener("click",function(e){
                 filtersDOM.initFilters(dataThree,theFilterThree);
                 filtersDOM.updateAfilterDOM(targetValue,idFilter,"DESC");
                 receiptsGalery(dataThree);
+            }
             break;
             default:
 
@@ -183,28 +186,31 @@ document.addEventListener("click",function(e){
 
         switch (typeFilter) {
             //si c'est un ingredient
-            case "ingredients":
+            case "ingredients":{
                 const theFilterOne = filtersDOM.updateTheFilter("ingredients",targetValue,"DESC"); //Met a jour le tableau des recherche
                 const dataOne = proxySearchReceipts().proxySearch(theFilterOne); //Envoi la recherche a la fonction search
                 filtersDOM.initFilters(dataOne,theFilterOne); //Mise a jour des tableaux de filtres
                 filtersDOM.updateAfilterDOM(targetValue,"ingredients","INC"); //Met a jour les filtres sur le DOM
                 receiptsGalery(dataOne);//Affiche les recettes dans le DOM
+            }
             break;
             //si c'est un appareil
-            case "appliances":
+            case "appliances":{
                 const theFilterTwo = filtersDOM.updateTheFilter("appliances",targetValue,"DESC");
                 const dataTwo = proxySearchReceipts().proxySearch(theFilterTwo);
                 filtersDOM.initFilters(dataTwo,theFilterTwo);
                 filtersDOM.updateAfilterDOM(targetValue,"appliances","INC");
                 receiptsGalery(dataTwo);
+            }
             break;
             //si c'est un ustensile
-            case "ustensils":
+            case "ustensils":{
                 const theFilterThree = filtersDOM.updateTheFilter("ustensils",targetValue,"DESC");
                 const dataThree = proxySearchReceipts().proxySearch(theFilterThree);
                 filtersDOM.initFilters(dataThree,theFilterThree);
                 filtersDOM.updateAfilterDOM(targetValue,"ustensils","INC");
                 receiptsGalery(dataThree);
+            }
             break;
             default:
             break;
