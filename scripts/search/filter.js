@@ -44,7 +44,7 @@ export function filters(data) {
                     elem != value ? newtabIngredient.push({"ingredient": elem}) : "";
                 }
                 theFilter[element] = newtabIngredient;
-            };
+            }
 
             let newtabUstensils = [];
             if( element == "ustensils"){
@@ -53,7 +53,7 @@ export function filters(data) {
                     elem != value ? newtabUstensils.push(elem) : "";
                 }
                 theFilter[element] = newtabUstensils;
-            };
+            }
 
 
             element == "keyword" || element == "appliances" ? theFilter[element] = "" : "";
@@ -150,23 +150,25 @@ export function filters(data) {
         //Si l'action est d'enlever un élément
         if (action == "DESC") {
             switch (idFilter) {
-                case "filterIngredients":
+                case "filterIngredients":{
                     let newfilterIngredient = [];
                     for (let index = 0; index < filterIngredients.length; index++) {
                         const element = filterIngredients[index];
                         element != elem ? newfilterIngredient.push(element) : "";
                     }
                     filterIngredients = newfilterIngredient;
+                }
                 break;
-                case "filterAppliances":
+                case "filterAppliances":{
                     let newfilterAppliances = [];
                     for (let index = 0; index < filterAppliances.length; index++) {
                         const element = filterAppliances[index];
-                        element != elem ? newfilterIngredient.push(element) : "";
+                        element != elem ? newfilterAppliances.push(element) : "";
                     }
                     filterAppliances = newfilterAppliances;
+                }
                 break;
-                case "filterUstensils":
+                case "filterUstensils":{
                     filterUstensils = filterUstensils.filter(item => item !== elem);
                     let newfilterUstensils = [];
                     for (let index = 0; index < filterUstensils.length; index++) {
@@ -174,6 +176,7 @@ export function filters(data) {
                         element != elem ? newfilterUstensils.push(element) : "";
                     }
                     filterUstensils = newfilterUstensils;
+                }
                 break;
             
                 default:
