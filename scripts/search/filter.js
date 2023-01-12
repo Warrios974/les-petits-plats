@@ -338,7 +338,6 @@ export function filters(data) {
 
             //Enleve les éléments qui sont en tag
             let newfilterAppliances = [];
-            debugger
             for (let index = 0; index < filterAppliances.length; index++) {
                 const elem = filterAppliances[index];
                 elem != theFilter["appliances"] ? newfilterAppliances.push(elem) : "";

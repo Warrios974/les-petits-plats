@@ -190,7 +190,6 @@ document.addEventListener("click",function(e){
                 const dataTwo = proxySearchReceipts().proxySearch(theFilterTwo);
                 const filterList = filtersDOM.initFilters(dataTwo,theFilterTwo,idFilter); //Mise a jour des tableaux de filtres
                 filtersDOM.updateAfilterDOM(targetValue,idFilter,"DESC");
-                debugger
                 displayLists(filterDOM,filterList);
                 receiptsGalery(dataTwo);
             }
