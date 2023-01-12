@@ -16,6 +16,7 @@ input{
         }
         > input{
             width: 100%;
+            color: map-get($map: $colors, $key: color-black);
             background-color: map-get($map: $colors, $key: color-gray);
         }
     }
