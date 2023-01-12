@@ -249,7 +249,7 @@ export function filters(data) {
     }
 
     //Fonction qui initialise et met a jour les tableaux ingredient, appareil et ustensil
-    function initFilters(receiptsFilted,theFilter){
+    function initFilters(receiptsFilted,theFilter,idFilter){
 
         // Filtre ingredient
             let tabFilterIngredients = [];
@@ -270,8 +270,8 @@ export function filters(data) {
             filterAppliances = filterAppliances.sort();
 
             //Enleve les éléments qui sont en tag
-            filterAppliances = filterAppliances.filter(app => app !== theFilter["appliance"]);
-        // End Filtre appareil
+            filterAppliances = filterAppliances.filter(app => app !== theFilter["appliances"]);
+            // End Filtre appareil
         
         // Filtre ustensile
             let tabFilterUstensils = [];
@@ -284,6 +284,20 @@ export function filters(data) {
                 filterUstensils = filterUstensils.filter(ust => ust !== ustensilFilter);
             });
         // End Filtre ustensile
+        
+        switch (idFilter) {
+            case "filterIngredients":{
+                return filterIngredients;
+            }
+            case "filterAppliances":{
+                return filterAppliances;
+            }
+            case "filterUstensils":{
+                return filterUstensils;
+            }
+            default:
+            break;
+        }
     }
 
     return { 
