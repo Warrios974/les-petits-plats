@@ -251,38 +251,39 @@ export function filters(data) {
     //Fonction qui initialise et met a jour les tableaux ingredient, appareil et ustensil
     function initFilters(receiptsFilted,theFilter){
 
-        let tabFilterIngredients = [];
+        // Filtre ingredient
+            let tabFilterIngredients = [];
+            receiptsFilted.forEach((receipt) => { receipt['ingredients'].forEach((ingredient) => { tabFilterIngredients.push(ingredient['ingredient']) }) })
+            filterIngredients = [...new Set(tabFilterIngredients)];
+            filterIngredients = filterIngredients.sort();
 
-        receiptsFilted.forEach((receipt) => { receipt['ingredients'].forEach((ingredient) => { tabFilterIngredients.push(ingredient['ingredient']) }) })
-        filterIngredients = [...new Set(tabFilterIngredients)];
-        filterIngredients = filterIngredients.sort();
+            //Enleve les éléments qui sont en tag
+            theFilter["ingredients"].forEach((ingredientFilter) => {
+                filterIngredients = filterIngredients.filter(ing => ing !== ingredientFilter.ingredient);
+            });
+        // End Filtre ingredient
 
-        //Enleve les éléments qui sont en tag
-        theFilter["ingredients"].forEach((ingredientFilter) => {
-            filterIngredients = filterIngredients.filter(ing => ing !== ingredientFilter.ingredient);
-        });
+        // Filtre appareil
+            let tabFilterAppliance = [];
+            receiptsFilted.forEach((receipt) => { tabFilterAppliance.push(receipt['appliance']) })
+            filterAppliances = [...new Set(tabFilterAppliance)];
+            filterAppliances = filterAppliances.sort();
 
-        let tabFilterAppliance = [];
+            //Enleve les éléments qui sont en tag
+            filterAppliances = filterAppliances.filter(app => app !== theFilter["appliance"]);
+        // End Filtre appareil
+        
+        // Filtre ustensile
+            let tabFilterUstensils = [];
+            receiptsFilted.forEach((receipt) => { receipt['ustensils'].forEach((ustensil) => { tabFilterUstensils.push(ustensil) }) })
+            filterUstensils = [...new Set(tabFilterUstensils)];
+            filterUstensils = filterUstensils.sort();
 
-        receiptsFilted.forEach((receipt) => { tabFilterAppliance.push(receipt['appliance']) })
-        filterAppliances = [...new Set(tabFilterAppliance)];
-        filterAppliances = filterAppliances.sort();
-
-        //Enleve les éléments qui sont en tag
-        theFilter["ustensils"].forEach((applianceFilter) => {
-            filterAppliances = filterAppliances.filter(app => app !== applianceFilter);
-        });
-
-        let tabFilterUstensils = [];
-
-        receiptsFilted.forEach((receipt) => { receipt['ustensils'].forEach((ustensil) => { tabFilterUstensils.push(ustensil) }) })
-        filterUstensils = [...new Set(tabFilterUstensils)];
-        filterUstensils = filterUstensils.sort();
-
-        //Enleve les éléments qui sont en tag
-        theFilter["ustensils"].forEach((ustensilFilter) => {
-            filterUstensils = filterUstensils.filter(ust => ust !== ustensilFilter);
-        });
+            //Enleve les éléments qui sont en tag
+            theFilter["ustensils"].forEach((ustensilFilter) => {
+                filterUstensils = filterUstensils.filter(ust => ust !== ustensilFilter);
+            });
+        // End Filtre ustensile
     }
 
     return { 
