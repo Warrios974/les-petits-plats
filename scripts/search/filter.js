@@ -326,7 +326,6 @@ export function filters(data) {
             }
         // End filtre ingredient
 
-        console.log(filterAppliances)
         //Filtre appareil
             let tabFilterAppliance = [];
             for (let index = 0; index < receiptsFilted.length; index++) {
@@ -345,7 +344,6 @@ export function filters(data) {
                 elem != theFilter["appliances"] ? newfilterAppliances.push(elem) : "";
             }
             filterAppliances = newfilterAppliances;
-            console.log(filterAppliances)
         // End filtre appareil
 
         // filtre ustensil
