@@ -37,8 +37,25 @@ export function filters(data) {
         //Si on doit enlever un élément au tableau
         if (incORdesc == "DESC" ) {
             //En fonction du filtre le tableau est ajusté
-            element == "ingredients" ? theFilter[element] = theFilter[element].filter(item => item["ingredient"] !== value) : "";
-            element == "ustensils" ? theFilter[element] = theFilter[element].filter(item => item !== value) : "";
+            let newtabIngredient = [];
+            if( element == "ingredients"){
+                for (let index = 0; index < theFilter[element].length; index++) {
+                    const elem = theFilter[element][index]["ingredient"];
+                    elem != value ? newtabIngredient.push({"ingredient": elem}) : "";
+                }
+                theFilter[element] = newtabIngredient;
+            };
+
+            let newtabUstensils = [];
+            if( element == "ustensils"){
+                for (let index = 0; index < theFilter[element].length; index++) {
+                    const elem = theFilter[element][index];
+                    elem != value ? newtabUstensils.push(elem) : "";
+                }
+                theFilter[element] = newtabUstensils;
+            };
+
+
             element == "keyword" || element == "appliances" ? theFilter[element] = "" : "";
             ifEmpty();
         }
@@ -79,10 +96,12 @@ export function filters(data) {
                     const keywordIngredient = elem.toLowerCase();
                     
                     //Parcours chaque ingredient et compare avec ce qu'on a ecrit
-                    filterIngredients.forEach((ingredient) => {
+                    for (let index = 0; index < filterIngredients.length; index++) {
+                        const ingredient = filterIngredients[index];
+
                         const nameIngredient = ingredient.toLowerCase();
                         nameIngredient.includes(keywordIngredient) ? newIngredientTab.push(ingredient) : "";
-                    });
+                    }
 
                     initFiltersForDOM("ingredient",newIngredientTab);
                 }
@@ -93,10 +112,12 @@ export function filters(data) {
                     const keywordAppliance = elem.toLowerCase();
                     
                     //Parcours chaque ingredient et compare avec ce qu'on a ecrit
-                    filterAppliances.forEach((appliance) => {
+                    for (let index = 0; index < filterAppliances.length; index++) {
+                        const appliance = filterAppliances[index];
+                        
                         const nameAppliance = appliance.toLowerCase();
                         nameAppliance.includes(keywordAppliance) ? newApplianceTab.push(appliance) : "";
-                    });
+                    }
 
                     initFiltersForDOM("appliance",newApplianceTab);
                 }
@@ -107,10 +128,12 @@ export function filters(data) {
                     const keywordUstensils = elem.toLowerCase();
                     
                     //Parcours chaque ingredient et compare avec ce qu'on a ecrit
-                    filterUstensils.forEach((ustensil) => {
+                    for (let index = 0; index < filterUstensils.length; index++) {
+                        const ustensil = filterUstensils[index];
+                        
                         const nameUstensils = ustensil.toLowerCase();
                         nameUstensils.includes(keywordUstensils) ? newUstensilsTab.push(ustensil) : "";
-                    });
+                    }
 
                     initFiltersForDOM("ustensil",newUstensilsTab);
 
@@ -128,13 +151,29 @@ export function filters(data) {
         if (action == "DESC") {
             switch (idFilter) {
                 case "filterIngredients":
-                    filterIngredients = filterIngredients.filter(item => item !== elem);
+                    let newfilterIngredient = [];
+                    for (let index = 0; index < filterIngredients.length; index++) {
+                        const element = filterIngredients[index];
+                        element != elem ? newfilterIngredient.push(element) : "";
+                    }
+                    filterIngredients = newfilterIngredient;
                 break;
                 case "filterAppliances":
-                    filterAppliances = filterAppliances.filter(item => item !== elem);
+                    let newfilterAppliances = [];
+                    for (let index = 0; index < filterAppliances.length; index++) {
+                        const element = filterAppliances[index];
+                        element != elem ? newfilterIngredient.push(element) : "";
+                    }
+                    filterAppliances = newfilterAppliances;
                 break;
                 case "filterUstensils":
                     filterUstensils = filterUstensils.filter(item => item !== elem);
+                    let newfilterUstensils = [];
+                    for (let index = 0; index < filterUstensils.length; index++) {
+                        const element = filterUstensils[index];
+                        element != elem ? newfilterUstensils.push(element) : "";
+                    }
+                    filterUstensils = newfilterUstensils;
                 break;
             
                 default:
@@ -190,12 +229,14 @@ export function filters(data) {
             const List = filterIngredientDOM.querySelector(".select__choises");
             List.innerHTML = "";
 
-            data.forEach((ingredient) => {
+            for (let index = 0; index < data.length; index++) {
+                const ingredient = data[index];
+                
                 const li = document.createElement( "li" );
                 li.setAttribute("class", "col-4 p-2");
                 li.textContent = ingredient;
                 List.appendChild(li);
-            })
+            }
         }
 
         function initApplianceFilter(data) {
@@ -204,12 +245,14 @@ export function filters(data) {
             const List = filterApplianceDOM.querySelector(".select__choises");
             List.innerHTML = "";
 
-            data.forEach((appliance) => {
+            for (let index = 0; index < data.length; index++) {
+                const appliance = data[index];
+                
                 const li = document.createElement( "li" );
                 li.setAttribute("class", "col-4 p-2");
                 li.textContent = appliance;
                 List.appendChild(li);
-            })
+            }
         }
 
         function initUstensilFilter(data) {
@@ -218,12 +261,14 @@ export function filters(data) {
             const List = filterUstensilDOM.querySelector(".select__choises");
             List.innerHTML = "";
 
-            data.forEach((ustensil) => {
+            for (let index = 0; index < data.length; index++) {
+                const ustensil = data[index];
+                
                 const li = document.createElement( "li" );
                 li.setAttribute("class", "col-4 p-2");
                 li.textContent = ustensil;
                 List.appendChild(li);
-            })
+            }
         }
         /*********** */
     }
@@ -251,38 +296,80 @@ export function filters(data) {
     //Fonction qui initialise et met a jour les tableaux ingredient, appareil et ustensil
     function initFilters(receiptsFilted,theFilter){
 
-        let tabFilterIngredients = [];
+        //Filtre ingredient
+            let tabFilterIngredients = [];
+            for (let index = 0; index < receiptsFilted.length; index++) {
+                const receipt = receiptsFilted[index];
 
-        receiptsFilted.forEach((receipt) => { receipt['ingredients'].forEach((ingredient) => { tabFilterIngredients.push(ingredient['ingredient']) }) })
-        filterIngredients = [...new Set(tabFilterIngredients)];
-        filterIngredients = filterIngredients.sort();
+                for (let index = 0; index < receipt['ingredients'].length; index++) {
+                    const ingredient = receipt['ingredients'][index];
+                    
+                    tabFilterIngredients.push(ingredient['ingredient'])
+                }
+            }
+            filterIngredients = [...new Set(tabFilterIngredients)];
+            filterIngredients = filterIngredients.sort();
 
-        //Enleve les éléments qui sont en tag
-        theFilter["ingredients"].forEach((ingredientFilter) => {
-            filterIngredients = filterIngredients.filter(ing => ing !== ingredientFilter.ingredient);
-        });
+            //Enleve les éléments qui sont en tag
+            for (let index = 0; index < theFilter["ingredients"].length; index++) {
+                const ingredientFilter = theFilter["ingredients"][index].ingredient;
 
-        let tabFilterAppliance = [];
+                let newfilterIngredient = [];
+                for (let index = 0; index < filterIngredients.length; index++) {
+                    const elem = filterIngredients[index];
+                    elem != ingredientFilter ? newfilterIngredient.push(elem) : "";
+                }
+                filterIngredients = newfilterIngredient;
+            }
+        // End filtre ingredient
 
-        receiptsFilted.forEach((receipt) => { tabFilterAppliance.push(receipt['appliance']) })
-        filterAppliances = [...new Set(tabFilterAppliance)];
-        filterAppliances = filterAppliances.sort();
+        //Filtre appareil
+            let tabFilterAppliance = [];
+            for (let index = 0; index < receiptsFilted.length; index++) {
+                const receipt = receiptsFilted[index];
+                    
+                tabFilterAppliance.push(receipt['appliance'])
+            }
+            filterAppliances = [...new Set(tabFilterAppliance)];
+            filterAppliances = filterAppliances.sort();
 
-        //Enleve les éléments qui sont en tag
-        theFilter["ustensils"].forEach((applianceFilter) => {
-            filterAppliances = filterAppliances.filter(app => app !== applianceFilter);
-        });
+            //Enleve les éléments qui sont en tag
+            // A AJOUTER !!!!!!!!!!!!!!!!!!
+            //filterAppliances = filterAppliances.filter(app => app !== theFilter["appliance"]);
+            let newfilterAppliances = [];
+            for (let index = 0; index < filterAppliances.length; index++) {
+                const elem = filterAppliances[index];
+                elem != theFilter["appliance"] ? newfilterAppliances.push(elem) : "";
+            }
+            filterAppliances = newfilterAppliances;
+        // End filtre appareil
 
-        let tabFilterUstensils = [];
+        // filtre ustensil
+            let tabFilterUstensils = [];
+            for (let index = 0; index < receiptsFilted.length; index++) {
+                const receipt = receiptsFilted[index];
 
-        receiptsFilted.forEach((receipt) => { receipt['ustensils'].forEach((ustensil) => { tabFilterUstensils.push(ustensil) }) })
-        filterUstensils = [...new Set(tabFilterUstensils)];
-        filterUstensils = filterUstensils.sort();
+                for (let index = 0; index < receipt['ustensils'].length; index++) {
+                    const ustensil = receipt['ustensils'][index];
+                    
+                    tabFilterUstensils.push(ustensil)
+                }
+            }
+            filterUstensils = [...new Set(tabFilterUstensils)];
+            filterUstensils = filterUstensils.sort();
 
-        //Enleve les éléments qui sont en tag
-        theFilter["ustensils"].forEach((ustensilFilter) => {
-            filterUstensils = filterUstensils.filter(ust => ust !== ustensilFilter);
-        });
+            //Enleve les éléments qui sont en tag
+            for (let index = 0; index < theFilter["ustensils"].length; index++) {
+                const ustensilFilter = theFilter["ustensils"][index];
+
+                let newfilterUstensils = [];
+                for (let index = 0; index < filterUstensils.length; index++) {
+                    const elem = filterUstensils[index];
+                    elem != ustensilFilter ? newfilterUstensils.push(elem) : "";
+                }
+                filterUstensils = newfilterUstensils;
+            }
+        // End filtre ustensil
     }
 
     return { 
