@@ -1,0 +1,5 @@
+#Ignorer le dossier Node
+/node_modules
+
+#Ignorer le fichier eslint
+.eslintrc.json
