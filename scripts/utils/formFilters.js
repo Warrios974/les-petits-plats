@@ -44,7 +44,6 @@ function displayLists(filterDOM,filterList) {
     }
 
     if (filterList && filterList.length == 0) {
-        console.log(filterList.length)
         //Fermeture du filtre
         filterDOM.classList.add("col-2");
         filterDOM.classList.remove("col-6");
