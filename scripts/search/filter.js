@@ -251,39 +251,44 @@ export function filters(data) {
     //Fonction qui initialise et met a jour les tableaux ingredient, appareil et ustensil
     function initFilters(receiptsFilted,theFilter,idFilter){
 
-        // Filtre ingredient
-            let tabFilterIngredients = [];
-            receiptsFilted.forEach((receipt) => { receipt['ingredients'].forEach((ingredient) => { tabFilterIngredients.push(ingredient['ingredient']) }) })
+        //Déclaration des variables utiles
+        let tabFilterIngredients = [];
+        let tabFilterAppliance = [];
+        let tabFilterUstensils = [];
+
+        //Création des tableaux des filtres
+        receiptsFilted.forEach((receipt) => { 
+
+            // Filtre ingredient
+            receipt['ingredients'].forEach((ingredient) => { tabFilterIngredients.push(ingredient['ingredient']) });
             filterIngredients = [...new Set(tabFilterIngredients)];
             filterIngredients = filterIngredients.sort();
 
-            //Enleve les éléments qui sont en tag
-            theFilter["ingredients"].forEach((ingredientFilter) => {
-                filterIngredients = filterIngredients.filter(ing => ing !== ingredientFilter.ingredient);
-            });
-        // End Filtre ingredient
-
-        // Filtre appareil
-            let tabFilterAppliance = [];
-            receiptsFilted.forEach((receipt) => { tabFilterAppliance.push(receipt['appliance']) })
+            // Filtre appareil
+            tabFilterAppliance.push(receipt['appliance']);
             filterAppliances = [...new Set(tabFilterAppliance)];
             filterAppliances = filterAppliances.sort();
 
-            //Enleve les éléments qui sont en tag
-            filterAppliances = filterAppliances.filter(app => app !== theFilter["appliances"]);
-            // End Filtre appareil
-        
-        // Filtre ustensile
-            let tabFilterUstensils = [];
-            receiptsFilted.forEach((receipt) => { receipt['ustensils'].forEach((ustensil) => { tabFilterUstensils.push(ustensil) }) })
+            // Filtre ustensile
+            receipt['ustensils'].forEach((ustensil) => { tabFilterUstensils.push(ustensil) });
             filterUstensils = [...new Set(tabFilterUstensils)];
             filterUstensils = filterUstensils.sort();
 
-            //Enleve les éléments qui sont en tag
+        })
+
+        //Enleve les éléments qui sont en tag des filtres
+            // Filtre ustensile
+            theFilter["ingredients"].forEach((ingredientFilter) => {
+                filterIngredients = filterIngredients.filter(ing => ing !== ingredientFilter.ingredient);
+            });
+            
+            // Filtre appareil
+            filterAppliances = filterAppliances.filter(app => app !== theFilter["appliances"]);
+
+            // Filtre ustensile
             theFilter["ustensils"].forEach((ustensilFilter) => {
                 filterUstensils = filterUstensils.filter(ust => ust !== ustensilFilter);
             });
-        // End Filtre ustensile
         
         switch (idFilter) {
             case "filterIngredients":{
