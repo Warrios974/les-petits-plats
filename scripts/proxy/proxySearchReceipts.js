@@ -3,30 +3,23 @@ import { search } from "../search/search.js";
 let searchCache = [];
 
 export function proxySearchReceipts() {
-
-    function proxySearch(theFilter) {
-
-        /*searchCache.forEach(element => {
-
-            const theFilterJSON = JSON.stringify(theFilter);
-            const elementFilterJSON  = JSON.stringify(element["filter"]);
-
-            console.log(theFilterJSON);
-            console.log(elementFilterJSON);
-
-            if ( theFilterJSON == elementFilterJSON) {
-                
-                console.log("Data from proxy");
-
-                search(theFilter,incORdesc,element["data"])
-                
-                return element["data"];
     
-            }
-        });
+    function proxySearch(theFilter) {
+        
+        console.log(searchCache)
+        if (searchCache.length != 0) {
+            searchCache.forEach(element => {
+                debugger
+                if (element["filter"] === theFilter) {
+                    
+                    console.log("Data from proxy");
+                    const data = element["data"];
+                    return data;
+                }
+            });
+        }
 
-        console.log("Add in cache")*/
-
+        console.log("Add in cache")
         const data = search(theFilter);
 
         searchCache.push({
@@ -34,15 +27,13 @@ export function proxySearchReceipts() {
             "data" : data
         });
         
-
-        //console.log(searchCache)
+        console.log(searchCache)
         return data;
         
     }
 
 
     return {
-        searchCache,
         proxySearch
     }
 }
