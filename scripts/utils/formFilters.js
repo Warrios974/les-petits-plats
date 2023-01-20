@@ -47,6 +47,7 @@ function displayLists(filterDOM,filterList) {
     const idFilter = filterDOM.getAttribute("id");
 
     const currentFilter = filtersIsOpen.find(elem => elem.id === idFilter);
+    const filterOpen = filtersIsOpen.find((element) => element.isOpen === true && element.id !== idFilter);
     
     let nameFilter ;
 
@@ -60,7 +61,7 @@ function displayLists(filterDOM,filterList) {
         nameFilter = "un ustensile";
     }
 
-    if (filterList && filterList.length == 0) {
+    if (filterList && filterList.length === 0) {
         
         //Fermeture du filtre
         filterDOM.classList.add("col-2");
@@ -70,9 +71,9 @@ function displayLists(filterDOM,filterList) {
         input.setAttribute("placeholder", "");
         list.style.display = "none";
         list.classList.remove("row");
-        filterDOM.setAttribute("select","close");
         input.value = "";
 
+        currentFilter.isOpen = false;
         //Indique que maintenant tous les filtres sont fermés
         open = false
 
@@ -104,7 +105,6 @@ function displayLists(filterDOM,filterList) {
     //Affichage du menu du filtre s'il est fermé
     //quand un autre filtre est ouvert
     if (currentFilter.isOpen === false && open == true && filterList == null) {
-        const filterOpen = filtersIsOpen.find((element) => element.isOpen === true && element.id !== idFilter);
         const idFilterOpen = filterOpen.id;
         const selectOpen = filterDOM.parentElement.querySelector(`#${idFilterOpen}`);
         
