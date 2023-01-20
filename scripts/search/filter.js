@@ -84,6 +84,10 @@ export function filters(data) {
     //Fonction qui va mettre a jour les filtre sur le DOM
     function updateAfilterDOM(elem,idFilter,action) {
 
+        //Si l'action est de modifier toutes les listes
+        //comme quand ecrit dans la recherche principale
+        if (action === "UPALL") initFiltersForDOM("all");
+        
         //Si l'action est de modifier la liste
         //comme quand on recherche dans un filtre
         if (action == "UP") {

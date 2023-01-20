@@ -265,6 +265,8 @@ mainSearch.addEventListener("input", function(e) {
         //Lance une nouvelle recherche est affiche une nouvelle galery de recettes
         const theFilter = filtersDOM.updateTheFilter("keyword",value,"INC");
         const data = proxySearchReceipts().proxySearch(theFilter);
+        filtersDOM.initFilters(data,theFilter);
+        filtersDOM.updateAfilterDOM('','',"UPALL");
         receiptsGalery(data);
     }
 
@@ -273,6 +275,8 @@ mainSearch.addEventListener("input", function(e) {
         //Lance une nouvelle recherche est affiche une nouvelle galery de recettes
         const theFilter = filtersDOM.updateTheFilter("keyword",value,"DESC");
         const data = proxySearchReceipts().proxySearch(theFilter);
+        filtersDOM.initFilters(data,theFilter);
+        filtersDOM.updateAfilterDOM('','',"UPALL");
         receiptsGalery(data);
     }
 })
