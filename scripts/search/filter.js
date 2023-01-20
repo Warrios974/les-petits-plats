@@ -67,11 +67,15 @@ export function filters(data) {
     //Fonction qui va mettre a jour les filtre sur le DOM
     function updateAfilterDOM(elem,idFilter,action) {
 
+        //Si l'action est de modifier toutes les listes
+        //comme quand ecrit dans la recherche principale
+        if (action === "UPALL") initFiltersForDOM("all");
+
         //Si l'action est de modifier la liste
         //comme quand on recherche dans un filtre
-        if (action == "UP") {
+        if (action === "UP") {
 
-            //En fonction de l'ID du filtre le tableau du filtre et mise a jour
+            //En fonction de l'ID du filtre le tableau du filtre est mise a jour
             switch (idFilter) {
                 case "searchIngredient":{
                     
@@ -125,7 +129,7 @@ export function filters(data) {
         }
 
         //Si l'action est d'enlever un élément
-        if (action == "DESC") {
+        if (action === "DESC") {
             switch (idFilter) {
                 case "filterIngredients":
                     filterIngredients = filterIngredients.filter(item => item !== elem);
@@ -149,7 +153,7 @@ export function filters(data) {
         }
         
         //Si l'action est d'ajouter un élément
-        if (action == "INC") {
+        if (action === "INC") {
 
             initFiltersForDOM("ingredient",filterIngredients);
             initFiltersForDOM("appliance",filterAppliances);

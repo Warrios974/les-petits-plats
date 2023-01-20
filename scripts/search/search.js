@@ -108,6 +108,6 @@ export function search(theFilter,data) {
             receiptsFilted = newTab;
         }
     }
-
+    
     return receiptsFilted;
 }

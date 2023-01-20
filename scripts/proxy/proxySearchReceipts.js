@@ -6,10 +6,9 @@ export function proxySearchReceipts() {
     
     function proxySearch(theFilter) {
         
-        console.log(searchCache)
+        /*console.log(searchCache)
         if (searchCache.length != 0) {
             searchCache.forEach(element => {
-                debugger
                 if (element["filter"] === theFilter) {
                     
                     console.log("Data from proxy");
@@ -19,7 +18,7 @@ export function proxySearchReceipts() {
             });
         }
 
-        console.log("Add in cache")
+        console.log("Add in cache")*/
         const data = search(theFilter);
 
         searchCache.push({
@@ -27,7 +26,7 @@ export function proxySearchReceipts() {
             "data" : data
         });
         
-        console.log(searchCache)
+        //console.log(searchCache)
         return data;
         
     }
