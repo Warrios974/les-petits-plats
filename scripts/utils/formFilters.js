@@ -70,7 +70,6 @@ function displayLists(filterDOM,filterList) {
         input.setAttribute("placeholder", "");
         list.style.display = "none";
         list.classList.remove("row");
-        filterDOM.setAttribute("select","close");
         input.value = "";
 
         //Indique que maintenant tous les filtres sont fermés
