@@ -65,9 +65,9 @@ export function search(theFilter,data) {
                     //Vérifie si l'ingredient ce trouve dans la recette
                     let test;
                     for (let index = 0; index < receipt["ingredients"].length; index++) {
-                        const ingredient = receipt["ingredients"][index].ingredient;
+                        const ingredient = receipt["ingredients"][index].ingredient.toLowerCase();
                         
-                        if (ingredient == ingredientFilter.ingredient) {
+                        if (ingredient == ingredientFilter.ingredient.toLowerCase()) {
                             test = true;
                             break;
                         }
@@ -108,7 +108,7 @@ export function search(theFilter,data) {
             for (let index = 0; index < receiptsFilted.length; index++) {
                 const receipt = receiptsFilted[index];
                 
-                theFilter["appliances"] == receipt["appliance"] ? newTab.push(receipt) : "";
+                theFilter["appliances"].toLowerCase() == receipt["appliance"].toLowerCase() ? newTab.push(receipt) : "";
             }
 
             receiptsFilted = newTab;
@@ -126,12 +126,12 @@ export function search(theFilter,data) {
                 const receipt = receiptsFilted[index];
 
                 for (let index = 0; index < theFilter["ustensils"].length; index++) {
-                    const ustensilFilter = theFilter["ustensils"][index];
+                    const ustensilFilter = theFilter["ustensils"][index].toLowerCase();
                     
                     //Vérifie si l'ustensile ce trouve dans la recette
                     let test;
                     for (let index = 0; index < receipt["ustensils"].length; index++) {
-                        const ustensil = receipt["ustensils"][index];
+                        const ustensil = receipt["ustensils"][index].toLowerCase();
                         
                         if (ustensil == ustensilFilter) {
                             test = true;

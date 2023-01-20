@@ -318,18 +318,18 @@ export function filters(data) {
         for (let index = 0; index < receiptsFilted.length; index++) {
             const receipt = receiptsFilted[index];
 
-            tabFilterAppliances.push(receipt['appliance']);
+            tabFilterAppliances.push(receipt['appliance'].charAt(0).toUpperCase() + receipt['appliance'].slice(1));
 
             for (let index = 0; index < receipt['ingredients'].length; index++) {
                 const ingredient = receipt['ingredients'][index];
                 
-                tabFilterIngredients.push(ingredient['ingredient']);
+                tabFilterIngredients.push(ingredient['ingredient'].charAt(0).toUpperCase() + ingredient['ingredient'].slice(1));
             }
 
             for (let index = 0; index < receipt['ustensils'].length; index++) {
                 const ustensil = receipt['ustensils'][index];
                 
-                tabFilterUstensils.push(ustensil);
+                tabFilterUstensils.push(ustensil.charAt(0).toUpperCase() + ustensil.slice(1));
             }
         }
 
