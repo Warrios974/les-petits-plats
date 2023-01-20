@@ -240,7 +240,7 @@ export function filters(data) {
                 const ingredient = data[index];
                 
                 const li = document.createElement( "li" );
-                li.setAttribute("class", "col-4 p-2");
+                li.setAttribute("class", "col-4 p-1");
                 li.textContent = ingredient;
                 List.appendChild(li);
             }
@@ -256,7 +256,7 @@ export function filters(data) {
                 const appliance = data[index];
                 
                 const li = document.createElement( "li" );
-                li.setAttribute("class", "col-4 p-2");
+                li.setAttribute("class", "col-4 p-1");
                 li.textContent = appliance;
                 List.appendChild(li);
             }
@@ -272,7 +272,7 @@ export function filters(data) {
                 const ustensil = data[index];
                 
                 const li = document.createElement( "li" );
-                li.setAttribute("class", "col-4 p-2");
+                li.setAttribute("class", "col-4 p-1");
                 li.textContent = ustensil;
                 List.appendChild(li);
             }
