@@ -55,7 +55,7 @@ export function search(theFilter,data) {
             receiptsFilted.forEach((receipt) => { 
                 theFilter["ingredients"].forEach((ingredientFilter) => {
                     //Vérifie si l'ingredient ce trouve dans la recette
-                    const test = receipt["ingredients"].find((ig) => ig.ingredient == ingredientFilter.ingredient) ? true : false;
+                    const test = receipt["ingredients"].find((ig) => ig.ingredient.toLowerCase() == ingredientFilter.ingredient.toLowerCase()) ? true : false;
                     //Ajout le resultat test dans un tableau
                     isReceiptValidTab.push(test);
                 });
@@ -79,7 +79,7 @@ export function search(theFilter,data) {
 
             //Vérifie si la recette contient chaque appareil de la recherche
             receiptsFilted.forEach((receipt) => { 
-                theFilter["appliances"] == receipt["appliance"] ? newTab.push(receipt) : "";
+                theFilter["appliances"].toLowerCase() == receipt["appliance"].toLowerCase() ? newTab.push(receipt) : "";
             });
 
             receiptsFilted = newTab;
@@ -96,7 +96,7 @@ export function search(theFilter,data) {
             //Le même principe que pour les ingredients (voir commentaire du tri par ingredient)
             receiptsFilted.forEach((receipt) => {
                 theFilter["ustensils"].forEach((ustensilFilter) => { 
-                    const test = receipt["ustensils"].find((ust) => ust == ustensilFilter) ? true : false;
+                    const test = receipt["ustensils"].find((ust) => ust.toLowerCase() == ustensilFilter.toLowerCase()) ? true : false;
                     isReceiptValidTab.push(test);
                 });
                 isReceiptValid = isReceiptValidTab.find(elem => elem == false) != null ? false : true;

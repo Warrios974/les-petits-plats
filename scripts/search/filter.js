@@ -263,17 +263,17 @@ export function filters(data) {
         receiptsFilted.forEach((receipt) => { 
 
             // Filtre ingredient
-            receipt['ingredients'].forEach((ingredient) => { tabFilterIngredients.push(ingredient['ingredient']) });
+            receipt['ingredients'].forEach((ingredient) => { tabFilterIngredients.push(ingredient['ingredient'].charAt(0).toUpperCase()+ ingredient['ingredient'].slice(1)) });
             filterIngredients = [...new Set(tabFilterIngredients)];
             filterIngredients = filterIngredients.sort();
 
             // Filtre appareil
-            tabFilterAppliance.push(receipt['appliance']);
+            tabFilterAppliance.push(receipt['appliance'].charAt(0).toUpperCase() + receipt['appliance'].slice(1));
             filterAppliances = [...new Set(tabFilterAppliance)];
             filterAppliances = filterAppliances.sort();
 
             // Filtre ustensile
-            receipt['ustensils'].forEach((ustensil) => { tabFilterUstensils.push(ustensil) });
+            receipt['ustensils'].forEach((ustensil) => { tabFilterUstensils.push(ustensil.charAt(0).toUpperCase() + ustensil.slice(1)) });
             filterUstensils = [...new Set(tabFilterUstensils)];
             filterUstensils = filterUstensils.sort();
 
