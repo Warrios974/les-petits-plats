@@ -287,7 +287,6 @@ export function filters(data) {
         span.setAttribute("class","tag p-2")
         const className = "tag--" + type;
         span.classList.add(className);
-        span.setAttribute("type", type);
         img.setAttribute("src","./assets/medias/icons/x-circle.svg");
         img.setAttribute("alt","");
         span.textContent = nameTag;

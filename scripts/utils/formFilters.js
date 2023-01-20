@@ -173,7 +173,7 @@ document.addEventListener("click",function(e){
 	const target = e.target;
 
     //Si je clic sur la fleche d'un des filtres
-	if(target && target.getAttribute("filter") === "yes"){
+	if(target && target.classList.contains('filterArrow')){
         const parent = e.target.parentElement.parentElement;
 		displayLists(parent);
         
@@ -235,8 +235,14 @@ document.addEventListener("click",function(e){
 
     //Si je clic sur la croix d'un tag ajouté
     if (target.parentElement.parentElement && target.parentElement.parentElement.getAttribute("id") == "tagsFilters") {
-        const typeFilter = target.parentElement.getAttribute("type");
+        
         const span = target.parentElement;
+        
+        //Récuperation du type de tag grace à la class
+        const className = target.parentElement.getAttribute("class");
+        const regex = /(tag--)+([\w]{0,})/;
+        const match = className.match(regex);
+        const typeFilter = match[2]
         const targetValue = target.parentElement.textContent;
 
         filtersDOM.deleteTagsFiltersInDOM(span);
