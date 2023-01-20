@@ -87,7 +87,7 @@ export function filters(data) {
         //Si l'action est de modifier toutes les listes
         //comme quand ecrit dans la recherche principale
         if (action === "UPALL") initFiltersForDOM("all");
-        
+
         //Si l'action est de modifier la liste
         //comme quand on recherche dans un filtre
         if (action == "UP") {
@@ -346,7 +346,7 @@ export function filters(data) {
                     if (element == ingredient) {
                         test = true;
                         break;
-                    };
+                    }
                 }
                 test == false ? newtabFilterIngredients.push(ingredient): "";
             }
@@ -364,7 +364,7 @@ export function filters(data) {
                     if (element == ingredient) {
                         test = true;
                         break;
-                    };
+                    }
                 }
                 test == false ? newtabFilterAppliances.push(ingredient): "";
             }
@@ -382,7 +382,7 @@ export function filters(data) {
                     if (element == ingredient) {
                         test = true;
                         break;
-                    };
+                    }
                 }
                 test == false ? newtabFilterUstensils.push(ingredient): "";
             }
