@@ -72,6 +72,7 @@ function displayLists(filterDOM,filterList) {
         list.classList.remove("row");
         input.value = "";
 
+        currentFilter.isOpen = false;
         //Indique que maintenant tous les filtres sont fermés
         open = false
 
