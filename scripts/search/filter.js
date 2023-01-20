@@ -236,10 +236,9 @@ export function filters(data) {
     function addTagsFiltersInDOM(nameTag,type) {
         const span = document.createElement( "span" );
         const img = document.createElement( "img" );
-        span.setAttribute("class","tag p-2")
+        span.setAttribute("class",`tag p-2`)
         const className = "tag--" + type;
         span.classList.add(className);
-        span.setAttribute("type", type);
         img.setAttribute("src","./assets/medias/icons/x-circle.svg");
         img.setAttribute("alt","");
         span.textContent = nameTag;

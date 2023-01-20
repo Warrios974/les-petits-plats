@@ -20,6 +20,21 @@ const inputSearchUstensil = document.querySelector("#filterUstensils input");
 
 const inputTab = [inputSearchIngredient, inputSearchAppliance, inputSearchUstensil];
 
+let filtersIsOpen = [
+    {
+        'id' : 'filterIngredients',
+        'isOpen' : false,
+    },
+    {
+        'id' : 'filterAppliances',
+        'isOpen' : false,
+    },
+    {
+        'id' : 'filterUstensils',
+        'isOpen' : false,
+    }
+]
+
 //Fonction qui gére l'affichage des menu des filtres
 function displayLists(filterDOM,filterList) {
     
@@ -31,6 +46,8 @@ function displayLists(filterDOM,filterList) {
 
     const idFilter = filterDOM.getAttribute("id");
 
+    const currentFilter = filtersIsOpen.find(elem => elem.id === idFilter);
+    
     let nameFilter ;
 
     if (idFilter == "filterIngredients") {
@@ -44,7 +61,7 @@ function displayLists(filterDOM,filterList) {
     }
 
     if (filterList && filterList.length == 0) {
-        console.log(filterList.length)
+        
         //Fermeture du filtre
         filterDOM.classList.add("col-2");
         filterDOM.classList.remove("col-6");
@@ -62,9 +79,10 @@ function displayLists(filterDOM,filterList) {
         return true;
     }
 
-    //Affichage du menu du filtre si il est fermer 
+
+    //Affichage du menu du filtre s'il est fermer 
     //mais qu'aucun autre filtre est ouvert
-    if (filterDOM.getAttribute("select") == "close" && open == false && filterList == null) {
+    if (currentFilter.isOpen === false && open == false && filterList == null) {
         
         //Affichage du filtre 
         filterDOM.classList.add("col-6");
@@ -74,19 +92,21 @@ function displayLists(filterDOM,filterList) {
         input.setAttribute("placeholder", "Rechercher " + nameFilter);
         list.style.display = "flex";
         list.classList.add("row");
-        filterDOM.setAttribute("select","open");
         input.focus();
         
+        currentFilter.isOpen = true;
         //Indique que maintenant un filtre est ouvert
         open = true;
 
         return true;
     }
 
-    //Affichage du menu du filtre si il est fermer 
+    //Affichage du menu du filtre s'il est fermé
     //quand un autre filtre est ouvert
-    if (filterDOM.getAttribute("select") == "close" && open == true && filterList == null) {
-        const selectOpen = filterDOM.parentElement.querySelector("div[select='open']");
+    if (currentFilter.isOpen === false && open == true && filterList == null) {
+        const filterOpen = filtersIsOpen.find((element) => element.isOpen === true && element.id !== idFilter);
+        const idFilterOpen = filterOpen.id;
+        const selectOpen = filterDOM.parentElement.querySelector(`#${idFilterOpen}`);
         
         //Déclaration des élément du filtre ouvert
         const selectOpenlabel = selectOpen.querySelector(".select__input label");
@@ -102,7 +122,6 @@ function displayLists(filterDOM,filterList) {
         selectOpeninput.setAttribute("placeholder", "");
         selectOpenlist.style.display = "none";
         selectOpenlist.classList.remove("row");
-        selectOpen.setAttribute("select","close");
         selectOpeninput.value = "";
 
         //Ouverture sélectionné
@@ -113,15 +132,17 @@ function displayLists(filterDOM,filterList) {
         input.setAttribute("placeholder", "Rechercher " + nameFilter);
         list.style.display = "flex";
         list.classList.add("row");
-        filterDOM.setAttribute("select","open");
+        
+        filterOpen.isOpen = false;
+        currentFilter.isOpen = true;
 
         return true;
     }
 
-    //Fermature du menu du filtre si il est ouvert 
+    //Fermature du menu du filtre s'il est ouvert 
     //quand un autre filtre est ouvert
     //et que l'élément active n'est pas l'input du filtre
-    if (filterDOM.getAttribute("select") == "open" && open == true && document.activeElement != input && filterList == null) {
+    if (currentFilter.isOpen === true && open == true && document.activeElement != input && filterList == null) {
         
         //Fermeture du filtre
         filterDOM.classList.add("col-2");
@@ -131,18 +152,17 @@ function displayLists(filterDOM,filterList) {
         input.setAttribute("placeholder", "");
         list.style.display = "none";
         list.classList.remove("row");
-        filterDOM.setAttribute("select","close");
         input.value = "";
 
+        currentFilter.isOpen = false;
         //Indique que maintenant tous les filtres sont fermés
         open = false
 
         return true;
     }
 
-    
     //Quand on clic sur un autre input on garde la variable open à "true"
-    if (filterDOM.getAttribute("select") == "open" && open == true && document.activeElement === input && filterList == null) {
+    if (currentFilter.isOpen === true && open == true && document.activeElement === input && filterList == null) {
         open = true;
         return true;
     }
@@ -150,10 +170,11 @@ function displayLists(filterDOM,filterList) {
 
 // Utilisation de la délégation d'événement pour détecter sur quoi je "clic"
 document.addEventListener("click",function(e){
+
 	const target = e.target;
 
     //Si je clic sur la fleche d'un des filtres
-	if(target && target.getAttribute("filter") === "yes"){
+	if(target && target.classList.contains('filterArrow')){
         const parent = e.target.parentElement.parentElement;
 		displayLists(parent);
         
@@ -215,8 +236,14 @@ document.addEventListener("click",function(e){
 
     //Si je clic sur la croix d'un tag ajouté
     if (target.parentElement.parentElement && target.parentElement.parentElement.getAttribute("id") == "tagsFilters") {
-        const typeFilter = target.parentElement.getAttribute("type");
+
         const span = target.parentElement;
+
+        //Récuperation du type de tag grace à la class
+        const className = target.parentElement.getAttribute("class");
+        const regex = /(tag--)+([\w]{0,})/;
+        const match = className.match(regex);
+        const typeFilter = match[2]
         const targetValue = target.parentElement.textContent;
 
         filtersDOM.deleteTagsFiltersInDOM(span);
