@@ -234,7 +234,7 @@ document.addEventListener("click",function(e){
     }
 
     //Si je clic sur la croix d'un tag ajouté
-    if (target.parentElement.parentElement && target.parentElement.parentElement.getAttribute("id") == "tagsFilters") {
+    if (target.parentElement && target.parentElement.parentElement && target.parentElement.parentElement.getAttribute("id") == "tagsFilters") {
         
         const span = target.parentElement;
         
