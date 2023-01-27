@@ -6,36 +6,27 @@ export function proxySearchReceipts() {
 
     function proxySearch(theFilter) {
 
-        /*searchCache.forEach(element => {
+        const theFilterJSON = JSON.stringify(theFilter);
 
-            const theFilterJSON = JSON.stringify(theFilter);
-            const elementFilterJSON  = JSON.stringify(element["filter"]);
+        const test = searchCache.filter((cache) => cache.filter === theFilterJSON )
 
-            console.log(theFilterJSON);
-            console.log(elementFilterJSON);
+        if ( test.length > 0 ) {
 
-            if ( theFilterJSON == elementFilterJSON) {
-                
-                console.log("Data from proxy");
+            search(theFilter,test[0].data)
 
-                search(theFilter,incORdesc,element["data"])
-                
-                return element["data"];
-    
-            }
-        });
-
-        console.log("Add in cache")*/
+            //Retourne les données du cache pour les autre composant de formFilter
+            return test[0].data;
+        }
 
         const data = search(theFilter);
 
         searchCache.push({
-            "filter" : theFilter,
+            "filter" : JSON.stringify(theFilter),
             "data" : data
         });
         
 
-        //console.log(searchCache)
+        //Retourne les données du cache pour les autre composant de formFilter
         return data;
         
     }
