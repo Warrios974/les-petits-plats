@@ -3,36 +3,37 @@ import { search } from "../search/search.js";
 let searchCache = [];
 
 export function proxySearchReceipts() {
-    
+
     function proxySearch(theFilter) {
-        
-        /*console.log(searchCache)
-        if (searchCache.length != 0) {
-            searchCache.forEach(element => {
-                if (element["filter"] === theFilter) {
-                    
-                    console.log("Data from proxy");
-                    const data = element["data"];
-                    return data;
-                }
-            });
+
+        const theFilterJSON = JSON.stringify(theFilter);
+
+        const test = searchCache.filter((cache) => cache.filter === theFilterJSON )
+
+        if ( test.length > 0 ) {
+
+            search(theFilter,test[0].data)
+
+            //Retourne les données du cache pour les autre composant de formFilter
+            return test[0].data;
         }
 
-        console.log("Add in cache")*/
         const data = search(theFilter);
 
         searchCache.push({
-            "filter" : theFilter,
+            "filter" : JSON.stringify(theFilter),
             "data" : data
         });
         
-        //console.log(searchCache)
+
+        //Retourne les données du cache pour les autre composant de formFilter
         return data;
         
     }
 
 
     return {
+        searchCache,
         proxySearch
     }
 }

@@ -8,7 +8,6 @@ export function search(theFilter,data) {
 
     //Data qui viendrai du proxy
     if (data) {
-        console.log('Is proxy data');
         return data;
     }
 
