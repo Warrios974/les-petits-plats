@@ -62,19 +62,20 @@ export function filters(data) {
 
         //Fonction qui va vérifier si le tableau de recherche est vide
         function ifEmpty() {
-            if (value.length < 3 && theFilter["ingredients"].length == 0 && theFilter["appliances"] == "" && theFilter["ustensils"].length == 0 && theFilter["empty"] == false) {
+            
+            if (theFilter["keyword"].length < 3 && theFilter["ingredients"].length === 0 && theFilter["appliances"].length === 0 && theFilter["ustensils"].length === 0 && theFilter["empty"] === false) {
                 theFilter["empty"] = true;
-                return true;
+                return;
             }
 
-            if (value.length < 3 && theFilter["ingredients"].length == 0 && theFilter["appliances"] == "" && theFilter["ustensils"].length == 0 && theFilter["empty"] == true) {
+            if (theFilter["keyword"].length < 3 && theFilter["ingredients"].length === 0 && theFilter["appliances"].length === 0 && theFilter["ustensils"].length === 0 && theFilter["empty"] === true) {
                 theFilter["empty"] = true;
-                return true;
+                return;
             }
 
-            if (value.length >= 3 || theFilter["ingredients"].length > 0 || theFilter["appliances"] || theFilter["ustensils"].length > 0 && theFilter["empty"] == true) {
+            if ((theFilter["keyword"].length >= 3 || theFilter["ingredients"].length > 0 || theFilter["appliances"] || theFilter["ustensils"].length > 0) && theFilter["empty"] === true) {
                 theFilter["empty"] = false;
-                return true;
+                return;
             }
         }
 
