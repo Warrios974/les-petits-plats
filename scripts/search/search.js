@@ -8,7 +8,6 @@ export function search(theFilter,data) {
 
     //Data qui viendrai du proxy
     if (data) {
-        console.log('Is proxy data');
         return data;
     }
 
@@ -24,7 +23,7 @@ export function search(theFilter,data) {
         if (theFilter["keyword"]) {
             
             let newTab = [];
-
+            
             for (let index = 0; index < receiptsFilted.length; index++) {
                 const receipt = receiptsFilted[index];
                 
