@@ -24,9 +24,7 @@ export function search(theFilter,data) {
             
             let newTab = [];
 
-            for (let index = 0; index < receiptsFilted.length; index++) {
-                const receipt = receiptsFilted[index];
-                
+            receiptsFilted.forEach((receipt) => {
                 const keyword = theFilter["keyword"].toLowerCase();
                 const name = receipt["name"].toLowerCase();
                 const description = receipt["description"].toLowerCase();
@@ -35,14 +33,12 @@ export function search(theFilter,data) {
                     newTab.push(receipt);
                 //et dans les ingredients de la recette
                 }else{
-                    for (let index = 0; index < receipt["ingredients"].length; index++) {
-                        const ingredient = receipt["ingredients"][index];
-                        
+                    receipt["ingredients"].forEach((ingredient) => {
                         const ingredientName = ingredient["ingredient"].toLowerCase();
                         ingredientName.includes(keyword) ? newTab.push(receipt) : "";
-                    }
+                    });
                 }
-            }
+            });
 
             receiptsFilted = newTab;
         }
@@ -51,49 +47,26 @@ export function search(theFilter,data) {
         if (theFilter["ingredients"].length != 0) {
             
             let newTab = [];
-            let isReceiptValid;
+            let isReceiptValid = false;
             let isReceiptValidTab = [];
             
             //Vérifie que si la recette contient chaque ingredients de la recherche
-            for (let index = 0; index < receiptsFilted.length; index++) {
-                const receipt = receiptsFilted[index];
-
-                for (let index = 0; index < theFilter["ingredients"].length; index++) {
-                    const ingredientFilter = theFilter["ingredients"][index];
-                    
+            receiptsFilted.forEach((receipt) => { 
+                theFilter["ingredients"].forEach((ingredientFilter) => {
                     //Vérifie si l'ingredient ce trouve dans la recette
-                    let test;
-                    for (let index = 0; index < receipt["ingredients"].length; index++) {
-                        const ingredient = receipt["ingredients"][index].ingredient.toLowerCase();
-                        
-                        if (ingredient == ingredientFilter.ingredient.toLowerCase()) {
-                            test = true;
-                            break;
-                        }
-
-                        test = false;
-                    }
+                    const test = receipt["ingredients"].find((ig) => ig.ingredient.toLowerCase() == ingredientFilter.ingredient.toLowerCase()) ? true : false;
                     //Ajout le resultat test dans un tableau
-                    isReceiptValidTab.push(test);  
-                }  
+                    isReceiptValidTab.push(test);
+                });
                 //Quand chaque ingredients de la recherche et vérifié, on vérifie si le tableaux 
                 //de vérification des recette est TOTALEMENT "true"
-                for (let index = 0; index < isReceiptValidTab.length; index++) {
-                    const elem = isReceiptValidTab[index];
-
-                    if (elem === false) {
-                        isReceiptValid = false
-                        break;
-                    }
-
-                    isReceiptValid = true;
-                }
+                isReceiptValid = isReceiptValidTab.find(elem => elem === false) != null ? false : true;
                 //Si oui la recette est ajouté
                 if( isReceiptValid ) newTab.push(receipt);
                 //Reset des variables
                 isReceiptValid = false;
-                isReceiptValidTab = [];
-            }
+                isReceiptValidTab = []
+            });
             
             receiptsFilted = newTab;
         }
@@ -104,11 +77,9 @@ export function search(theFilter,data) {
             let newTab = [];
 
             //Vérifie si la recette contient chaque appareil de la recherche
-            for (let index = 0; index < receiptsFilted.length; index++) {
-                const receipt = receiptsFilted[index];
-                
+            receiptsFilted.forEach((receipt) => { 
                 theFilter["appliances"].toLowerCase() == receipt["appliance"].toLowerCase() ? newTab.push(receipt) : "";
-            }
+            });
 
             receiptsFilted = newTab;
         }
@@ -117,53 +88,25 @@ export function search(theFilter,data) {
         if (theFilter["ustensils"].length != 0) {
 
             let newTab = [];
-            let isReceiptValid;
+            let isReceiptValid = false;
             let isReceiptValidTab = [];
             
-            //Vérifie que si la recette contient chaque ingredients de la recherche
-            for (let index = 0; index < receiptsFilted.length; index++) {
-                const receipt = receiptsFilted[index];
-
-                for (let index = 0; index < theFilter["ustensils"].length; index++) {
-                    const ustensilFilter = theFilter["ustensils"][index].toLowerCase();
-                    
-                    //Vérifie si l'ustensile ce trouve dans la recette
-                    let test;
-                    for (let index = 0; index < receipt["ustensils"].length; index++) {
-                        const ustensil = receipt["ustensils"][index].toLowerCase();
-                        
-                        if (ustensil == ustensilFilter) {
-                            test = true;
-                            break;
-                        }
-
-                        test = false;
-                    }
-                    //Ajout le resultat test dans un tableau
-                    isReceiptValidTab.push(test);  
-                }  
-                //Quand chaque ingredients de la recherche et vérifié, on vérifie si le tableaux 
-                //de vérification des recette est TOTALEMENT "true"
-                for (let index = 0; index < isReceiptValidTab.length; index++) {
-                    const elem = isReceiptValidTab[index];
-
-                    if (elem === false) {
-                        isReceiptValid = false
-                        break;
-                    }
-
-                    isReceiptValid = true;
-                }
-                //Si oui la recette est ajouté
+            //Vérifie si la recette contient chaque appareil de la recherche
+            //Le même principe que pour les ingredients (voir commentaire du tri par ingredient)
+            receiptsFilted.forEach((receipt) => {
+                theFilter["ustensils"].forEach((ustensilFilter) => { 
+                    const test = receipt["ustensils"].find((ust) => ust.toLowerCase() == ustensilFilter.toLowerCase()) ? true : false;
+                    isReceiptValidTab.push(test);
+                });
+                isReceiptValid = isReceiptValidTab.find(elem => elem == false) != null ? false : true;
                 if( isReceiptValid ) newTab.push(receipt);
-                //Reset des variables
                 isReceiptValid = false;
-                isReceiptValidTab = [];
-            }
+                isReceiptValidTab = []
+            });
 
             receiptsFilted = newTab;
         }
     }
-
+    
     return receiptsFilted;
 }
